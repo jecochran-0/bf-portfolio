@@ -1,0 +1,55 @@
+.navWrapper {
+  position: relative;
+  padding-bottom: clamp(12px, 2.5vw, 18px);
+}
+
+.track {
+  position: absolute;
+  left: 0;
+  right: clamp(18px, 6vw, 60px);
+  bottom: 2px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12));
+  pointer-events: none;
+}
+
+.track::after {
+  content: "";
+  position: absolute;
+  right: clamp(-14px, -1.5vw, -10px);
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translateY(-50%) rotate(45deg);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-left: none;
+  border-bottom: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.navList {
+  display: flex;
+  gap: clamp(28px, 4vw, 56px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: clamp(0.82rem, 0.42vw + 0.76rem, 1rem);
+  color: #ffffff;
+}
+
+.navLink {
+  position: relative;
+  color: inherit;
+  padding-bottom: 6px;
+}
+
+.highlight {
+  position: absolute;
+  bottom: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.95);
+  width: 0;
+  transform: translateX(0);
+  transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
+    width 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}

@@ -1,0 +1,83 @@
+.sidebar {
+  display: grid;
+  grid-template-columns: auto 1px;
+  align-items: start;
+  gap: clamp(16px, 4vh, 22px);
+}
+
+.sidebarRail {
+  display: grid;
+  justify-items: center;
+  gap: clamp(22px, 6vh, 34px);
+  padding: 6px 0;
+}
+
+.logoBadge {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.logoImage {
+  object-fit: contain;
+}
+
+.iconColumn {
+  display: grid;
+  gap: clamp(26px, 6vh, 38px);
+}
+
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.iconLink:hover {
+  transform: translateX(4px);
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+}
+
+.iconWrapper img,
+.iconWrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.iconGraphic {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+}
+
+.iconGraphic svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+.iconGraphic img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sidebarLine {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.45);
+  align-self: stretch;
+  justify-self: end;
+}
+
+.envelopeIcon {
+  fill: #ffffff;
+}
