@@ -6,25 +6,11 @@
 .track {
   position: absolute;
   left: 0;
-  right: clamp(18px, 6vw, 60px);
+  right: clamp(-120px, -12vw, -180px);
   bottom: 2px;
   height: 2px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12));
   pointer-events: none;
-}
-
-.track::after {
-  content: "";
-  position: absolute;
-  right: clamp(-14px, -1.5vw, -10px);
-  top: 50%;
-  width: 9px;
-  height: 9px;
-  transform: translateY(-50%) rotate(45deg);
-  border: 2px solid rgba(255, 255, 255, 0.45);
-  border-left: none;
-  border-bottom: none;
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .navList {

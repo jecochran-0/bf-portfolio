@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import styles from "./PrimaryNav.module.css";
@@ -12,17 +13,28 @@ type NavItem = {
 
 interface PrimaryNavProps {
   items: NavItem[];
-  activeHref: string;
+  activeHref?: string;
 }
 
 const RETURN_DELAY = 160;
 
 export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
+  const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const returnTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [activeHrefState, setActiveHrefState] = useState(activeHref);
+  const findMatchingHref = (candidate?: string | null) => {
+    if (!candidate) {
+      return items[0]?.href ?? "";
+    }
+    const match = items.find((item) => item.href === candidate);
+    return match ? match.href : items[0]?.href ?? candidate;
+  };
+
+  const initialActive = findMatchingHref(activeHref ?? pathname);
+
+  const [activeHrefState, setActiveHrefState] = useState(initialActive);
   const [highlight, setHighlight] = useState({ width: 0, left: 0 });
 
   const updateHighlight = (href: string) => {
@@ -51,13 +63,19 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
   }, [activeHrefState, items.length]);
 
   useEffect(() => {
+    const nextActive = findMatchingHref(activeHref ?? pathname);
+    setActiveHrefState(nextActive);
+    updateHighlight(nextActive);
+  }, [activeHref, pathname, items.length]);
+
+  useEffect(() => {
     const handleResize = () => {
       updateHighlight(activeHrefState);
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [activeHrefState, items.length]);
+  }, [activeHrefState, items.length, activeHref, pathname]);
 
   const handleHover = (href: string) => {
     if (returnTimeoutRef.current) {

@@ -36,10 +36,10 @@ export default function HomeScreen() {
   ];
 
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Projects", href: "#projects" },
+    { label: "Home", href: "/" },
+    { label: "Projects", href: "/projects" },
     { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
@@ -62,7 +62,7 @@ export default function HomeScreen() {
         />
         <main className={styles.content}>
           <div className={styles.topBar}>
-            <PrimaryNav items={navItems} activeHref="#home" />
+            <PrimaryNav items={navItems} />
           </div>
           <section className={styles.greeting} id="home">
             <p>Good afternoon, I&apos;m Jake.</p>

@@ -1,0 +1,137 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  filter: brightness(0.97) saturate(1.05) blur(5px);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(112deg, rgba(18, 22, 30, 0.5) 0%, rgba(18, 22, 30, 0.24) 55%, rgba(18, 22, 30, 0.08) 100%),
+    radial-gradient(circle at 10% 20%, rgba(240, 210, 150, 0.24), transparent 60%);
+}
+
+.layout {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(18px, 4vw, 44px);
+  padding: clamp(24px, 4.5vw, 52px);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  column-gap: clamp(40px, 5.6vw, 68px);
+  row-gap: clamp(28px, 3.6vw, 42px);
+  align-items: start;
+}
+
+.navFrame {
+  grid-column: 1 / -1;
+  max-width: 620px;
+  margin-bottom: clamp(18px, 3vw, 36px);
+}
+
+.intro {
+  padding-top: clamp(12px, 2vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.4vw, 28px);
+  font-size: clamp(0.98rem, 0.55vw + 0.92rem, 1.2rem);
+  letter-spacing: 0.05em;
+}
+
+.intro a {
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.intro a span {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  padding-bottom: 4px;
+}
+
+.grid {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 28px);
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+}
+
+.card {
+  background: rgba(8, 10, 14, 0.49);
+  padding: clamp(28px, 3.2vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 24px);
+  min-height: clamp(170px, 19vw, 210px);
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(54px, 5.5vw, 68px);
+}
+
+.cardHeader svg,
+.cardHeader img {
+  width: clamp(42px, 4.5vw, 58px);
+  height: clamp(42px, 4.5vw, 58px);
+  object-fit: contain;
+}
+
+.cardTitle {
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.cardSubtitle {
+  font-size: 0.78rem;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 960px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}

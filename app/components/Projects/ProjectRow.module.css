@@ -1,0 +1,111 @@
+.rowWrapper {
+  position: relative;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  gap: clamp(20px, 2.8vw, 36px);
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 clamp(260px, 28vw, 340px);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardImage {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  background: linear-gradient(135deg, rgba(190, 204, 220, 0.9), rgba(214, 224, 236, 0.88));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(90, 100, 120, 0.92);
+  font-size: clamp(1.2rem, 0.65vw + 1.1rem, 1.6rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.cardBody {
+  position: relative;
+  padding: 20px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.49);
+}
+
+.cardBody::before {
+  content: none;
+}
+
+.cardBody > * {
+  position: relative;
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.cardSubtitle {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.cardMeta {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.carouselButton {
+  position: absolute;
+  right: clamp(-4px, -1vw, -12px);
+  top: 50%;
+  transform: translate(100%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(10, 12, 18, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.carouselButton:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0b0d14;
+  transform: translate(100%, -50%) scale(1.05);
+}
+
+.carouselButton:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 8px;
+  right: clamp(6px, 1vw, 12px);
+  width: clamp(30px, 6vw, 80px);
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(8, 10, 16, 0.8));
+}
