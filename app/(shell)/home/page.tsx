@@ -1,72 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import { LeftSidebar, EnvelopeIcon } from "../components/LeftSidebar/LeftSidebar";
-import { PrimaryNav } from "../components/PrimaryNav/PrimaryNav";
 import styles from "./home.module.css";
 
 export default function HomeScreen() {
-  const socialLinks = [
-    {
-      href: "https://www.linkedin.com/in/jake",
-      label: "LinkedIn",
-      icon: (
-        <Image
-          src="/assets/linkedin-app-white-icon.webp"
-          alt="LinkedIn icon"
-          width={36}
-          height={36}
-        />
-      ),
-      external: true,
-    },
-    {
-      href: "https://twitter.com",
-      label: "X",
-      icon: (
-        <Image src="/assets/x-icon.png" alt="X icon" width={36} height={36} />
-      ),
-      external: true,
-    },
-    {
-      href: "mailto:hello@jake.dev",
-      label: "Email",
-      icon: <EnvelopeIcon />,
-    },
-  ];
-
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Projects", href: "/projects" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "/contact" },
-  ];
-
   return (
-    <div className={styles.page}>
-      <div className={styles.background}>
-        <Image
-          src="/assets/Portfolio-Background2.png"
-          alt="Sunset battlefield landscape"
-          fill
-          priority
-          className={styles.backgroundImage}
-        />
-      </div>
-      <div className={styles.overlay} />
-      <div className={styles.layout}>
-        <LeftSidebar
-          badgeSrc="/assets/DBJ-Logo.png"
-          badgeAlt="Jake DBJ monogram"
-          socials={socialLinks}
-        />
+    <>
+      <div data-shell-content className={styles.page}>
         <main className={styles.content}>
-          <div className={styles.topBar}>
-            <PrimaryNav items={navItems} />
-          </div>
           <section className={styles.greeting} id="home">
             <p>Good afternoon, I&apos;m Jake.</p>
           </section>
+
           <section className={styles.featured} id="projects" aria-label="Featured work">
             <article className={styles.card}>
               <div className={styles.cardMediaWrap}>
@@ -85,6 +29,7 @@ export default function HomeScreen() {
                 <p className={styles.cardMeta}>Case studies · redesigns · applications</p>
               </div>
             </article>
+
             <article className={styles.card} id="about">
               <div className={styles.cardMediaWrap}>
                 <Image
@@ -101,6 +46,7 @@ export default function HomeScreen() {
                 <p className={styles.cardMeta}>Product design · front-end · strategy</p>
               </div>
             </article>
+
             <article className={`${styles.card} ${styles.contactCard}`} id="contact">
               <div className={styles.contactGlyph}>
                 <span className={styles.contactIconMask} aria-hidden="true" />
@@ -111,6 +57,7 @@ export default function HomeScreen() {
               </div>
             </article>
           </section>
+
           <section className={styles.progressRow} aria-label="Progress trackers">
             <div className={styles.progressTile}>
               <div className={styles.tileIcon}>
@@ -132,7 +79,7 @@ export default function HomeScreen() {
           </section>
         </main>
       </div>
-    </div>
+    </>
   );
 }
 

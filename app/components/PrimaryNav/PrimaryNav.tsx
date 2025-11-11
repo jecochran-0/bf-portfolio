@@ -6,13 +6,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import styles from "./PrimaryNav.module.css";
 
-type NavItem = {
+export type PrimaryNavItem = {
   label: string;
   href: string;
 };
 
 interface PrimaryNavProps {
-  items: NavItem[];
+  items: PrimaryNavItem[];
   activeHref?: string;
 }
 
@@ -28,14 +28,19 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
     if (!candidate) {
       return items[0]?.href ?? "";
     }
-    const match = items.find((item) => item.href === candidate);
-    return match ? match.href : items[0]?.href ?? candidate;
+    const exactMatch = items.find((item) => item.href === candidate);
+    if (exactMatch) {
+      return exactMatch.href;
+    }
+    const prefixMatch = items.find((item) => candidate.startsWith(item.href));
+    return prefixMatch ? prefixMatch.href : items[0]?.href ?? candidate;
   };
 
   const initialActive = findMatchingHref(activeHref ?? pathname);
 
   const [activeHrefState, setActiveHrefState] = useState(initialActive);
   const [highlight, setHighlight] = useState({ width: 0, left: 0 });
+  const [transitionsEnabled, setTransitionsEnabled] = useState(false);
 
   const updateHighlight = (href: string) => {
     const index = items.findIndex((item) => item.href === href);
@@ -63,9 +68,12 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
   }, [activeHrefState, items.length]);
 
   useEffect(() => {
+    setTransitionsEnabled(true);
+  }, []);
+
+  useEffect(() => {
     const nextActive = findMatchingHref(activeHref ?? pathname);
     setActiveHrefState(nextActive);
-    updateHighlight(nextActive);
   }, [activeHref, pathname, items.length]);
 
   useEffect(() => {
@@ -95,11 +103,6 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
     }, RETURN_DELAY);
   };
 
-  const handleClick = (href: string) => {
-    setActiveHrefState(href);
-    updateHighlight(href);
-  };
-
   return (
     <div className={styles.navWrapper} ref={containerRef}>
       <div className={styles.track} aria-hidden="true" />
@@ -108,6 +111,9 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
         style={{
           width: highlight.width,
           transform: `translateX(${highlight.left}px)`,
+          transition: transitionsEnabled
+            ? undefined
+            : "none",
         }}
         aria-hidden="true"
       />
@@ -125,7 +131,6 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
             onMouseLeave={handleLeave}
             onFocus={() => handleHover(item.href)}
             onBlur={handleLeave}
-            onClick={() => handleClick(item.href)}
           >
             {item.label}
           </Link>

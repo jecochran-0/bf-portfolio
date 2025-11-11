@@ -44,6 +44,10 @@ export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
             </Link>
           ))}
         </div>
+        <Link href="/" aria-label="Return to welcome" className={styles.logoutLink}>
+          <span className={styles.logoutIcon}>⎋</span>
+          <span className={styles.logoutLabel}>Logout</span>
+        </Link>
       </div>
       <div className={styles.sidebarLine} aria-hidden="true" />
     </aside>

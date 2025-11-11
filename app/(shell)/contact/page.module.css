@@ -4,51 +4,17 @@
   display: flex;
   font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
   color: rgba(255, 255, 255, 0.92);
-  overflow: hidden;
-}
-
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
-
-.backgroundImage {
-  object-fit: cover;
-  filter: brightness(0.97) saturate(1.05) blur(5px);
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(112deg, rgba(18, 22, 30, 0.5) 0%, rgba(18, 22, 30, 0.24) 55%, rgba(18, 22, 30, 0.08) 100%),
-    radial-gradient(circle at 10% 20%, rgba(240, 210, 150, 0.24), transparent 60%);
-}
-
-.layout {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(18px, 4vw, 44px);
-  padding: clamp(24px, 4.5vw, 52px);
 }
 
 .content {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
   column-gap: clamp(40px, 5.6vw, 68px);
   row-gap: clamp(28px, 3.6vw, 42px);
   align-items: start;
-}
-
-.navFrame {
-  grid-column: 1 / -1;
-  max-width: 620px;
-  margin-bottom: clamp(18px, 3vw, 36px);
+  padding-top: clamp(18px, 3vw, 36px);
 }
 
 .intro {
