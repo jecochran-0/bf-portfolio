@@ -1,0 +1,456 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  padding-top: clamp(18px, 3vw, 36px);
+  max-width: 1400px;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.mainTitle {
+  font-size: clamp(2rem, 3.5vw, 4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0 0 clamp(16px, 2vw, 24px) 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.dataNote {
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 clamp(24px, 3vw, 36px) 0;
+  font-style: italic;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.statCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statValue {
+  font-size: clamp(2.2rem, 3.5vw, 3.8rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: clamp(0.75rem, 0.95vw, 0.95rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.5vw, 32px);
+}
+
+.sectionTitle {
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.subsectionTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  margin: 0 0 clamp(16px, 2vw, 24px) 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.bodyText {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+}
+
+.list li {
+  position: relative;
+  padding-left: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(0, 0, 0, 0.49);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.improvementsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(20px, 2.5vw, 32px) 0;
+}
+
+.improvementCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.improvementTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.improvementText {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(20px, 2.5vw, 32px) 0;
+}
+
+.detailCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detailTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.detailText {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.caseStudySection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 36px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.desktopImageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.desktopImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+.mobileImageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 500px;
+  margin: 0 auto clamp(24px, 3vw, 36px) auto;
+}
+
+.mobileImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+.imageCaption {
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  text-align: center;
+}
+
+.beforeAfterLabel {
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0 0 clamp(12px, 1.5vw, 18px) 0;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+}
+
+.beforeAfterMobileGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.processSteps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.processStep {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 18px);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.processNumber {
+  font-size: clamp(2.5rem, 3.5vw, 4rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1;
+}
+
+.processText {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.planningImage {
+  margin-top: clamp(24px, 3vw, 36px);
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.solutionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(20px, 2.5vw, 32px) 0;
+}
+
+.solutionCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.solutionTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.solutionText {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.resultCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resultValue {
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.2;
+}
+
+.resultLabel {
+  font-size: clamp(0.75rem, 0.95vw, 0.95rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+
+.principlesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.principleCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(16px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.principleTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+}
+
+.principleImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .improvementsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .processSteps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .principlesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .beforeAfterMobileGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .improvementsGrid,
+  .detailsGrid,
+  .solutionsGrid,
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .processSteps {
+    grid-template-columns: 1fr;
+  }
+}

@@ -73,10 +73,31 @@ type ShellLayoutProps = {
 export default function ShellLayout({ children }: ShellLayoutProps) {
   const pathname = usePathname();
   const prefersReducedMotion = useReducedMotion();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const [backgroundSrc] = useState(() =>
-    BACKGROUND_SOURCES[Math.floor(Math.random() * BACKGROUND_SOURCES.length)]
-  );
+  const [backgroundSrc, setBackgroundSrc] = useState(BACKGROUND_SOURCES[0]);
+
+  useEffect(() => {
+    const sessionKey = "portfolio-bg-selection";
+    const stored = sessionStorage.getItem(sessionKey);
+    if (stored) {
+      setBackgroundSrc(stored);
+    } else {
+      const selected = BACKGROUND_SOURCES[Math.floor(Math.random() * BACKGROUND_SOURCES.length)];
+      sessionStorage.setItem(sessionKey, selected);
+      setBackgroundSrc(selected);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Remove initial load fade-in after animation completes
+    if (isInitialLoad) {
+      const timer = setTimeout(() => {
+        setIsInitialLoad(false);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [isInitialLoad]);
 
   const childArray = Children.toArray(children);
 
@@ -215,7 +236,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${isInitialLoad ? styles.fadeIn : ""}`}>
       <div className={styles.sidebar}>
         <LeftSidebar
           badgeSrc="/assets/DBJ-Logo.png"

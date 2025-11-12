@@ -1,16 +1,33 @@
 .wrapper {
   position: relative;
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
   gap: clamp(18px, 4vw, 44px);
   padding: clamp(24px, 4.5vw, 52px);
   padding-left: clamp(12px, 2vw, 24px);
+  padding-bottom: clamp(24px, 4.5vw, 52px);
+  overflow-x: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.wrapper.fadeIn {
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 .sidebar {
-  position: relative;
+  position: fixed;
+  left: clamp(12px, 2vw, 24px);
+  top: clamp(24px, 4.5vw, 52px);
   z-index: 4;
+  height: calc(100vh - clamp(24px, 4.5vw, 52px) * 2);
 }
 
 .main {
@@ -19,6 +36,9 @@
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 3vw, 36px);
+  margin-left: calc(clamp(60px, 8vw, 100px) + clamp(18px, 4vw, 44px));
+  width: calc(100% - clamp(60px, 8vw, 100px) - clamp(18px, 4vw, 44px));
+  flex: 1 1 auto;
 }
 
 .backgroundLayer {
@@ -61,12 +81,17 @@
   z-index: 2;
   flex: 1 1 auto;
   min-height: calc(100vh - clamp(24px, 4.5vw, 52px) * 2);
-  overflow: hidden;
+  overflow: visible;
+  padding-bottom: clamp(24px, 4.5vw, 52px);
 }
 
 .transitionLayer {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 .pageSlot {

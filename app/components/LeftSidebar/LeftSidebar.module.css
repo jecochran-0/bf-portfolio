@@ -37,36 +37,33 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  font-size: 0.64rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   bottom: clamp(6px, 1vh, 12px);
+  transition: transform 0.2s ease;
 }
 
 .logoutLink:hover {
-  color: rgba(255, 255, 255, 0.95);
+  transform: translateX(-50%) translateX(4px);
 }
 
 .logoutIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 999px;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   line-height: 1;
+  color: rgba(255, 255, 255, 0.72);
 }
 
-.logoutLabel {
-  font-size: 0.55rem;
-  letter-spacing: 0.28em;
+.logoutLink:hover .logoutIcon {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .iconLink {

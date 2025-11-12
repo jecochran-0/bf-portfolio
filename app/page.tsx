@@ -1,12 +1,49 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./page.module.css";
 
 // Hero screen for the Battlefield 1 inspired landing page.
 export default function Home() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const router = useRouter();
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Set playback rate to normal speed
+    video.playbackRate = 1.0;
+
+    // Ensure video is fully loaded for smooth looping
+    const handleCanPlayThrough = () => {
+      video.play().catch(() => {
+        // Autoplay prevented, will play on user interaction
+      });
+    };
+
+    video.addEventListener("canplaythrough", handleCanPlayThrough);
+
+    return () => {
+      video.removeEventListener("canplaythrough", handleCanPlayThrough);
+    };
+  }, []);
+
+  const handleEnterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsFadingOut(true);
+    setTimeout(() => {
+      router.push("/home");
+    }, 800); // Match fade-out duration
+  };
+
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${isFadingOut ? styles.fadeOut : ""}`}>
       <div className={styles.background}>
         <Image
           src="/assets/Portfolio-Background1.png"
@@ -16,6 +53,17 @@ export default function Home() {
           className={styles.backgroundImage}
         />
       </div>
+      <video
+        ref={videoRef}
+        className={styles.smokeVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source src="/Smoke&Sparks.webm" type="video/webm" />
+      </video>
       <div className={styles.overlay} />
       <main className={styles.menu}>
         <div className={styles.centerpiece}>
@@ -24,13 +72,19 @@ export default function Home() {
               src="/assets/DBJ-Logo.png"
               alt="Jake's DBJ monogram"
               fill
+              sizes="(max-width: 768px) 200px, 300px"
               priority
               className={styles.logo}
             />
           </div>
           <p className={styles.welcome}>Welcome to Jake&apos;s Portfolio.</p>
         </div>
-        <Link href="/home" className={styles.enterButton} aria-label="Enter portfolio">
+        <Link
+          href="/home"
+          onClick={handleEnterClick}
+          className={styles.enterButton}
+          aria-label="Enter portfolio"
+        >
           Enter
         </Link>
       </main>
@@ -42,7 +96,12 @@ export default function Home() {
           aria-label="LinkedIn profile"
           className={styles.social}
         >
-          <LinkedInIcon />
+          <Image
+            src="/assets/linkedin-app-white-icon.webp"
+            alt="LinkedIn icon"
+            width={34}
+            height={34}
+          />
         </Link>
         <Link
           href="mailto:hello@jake.dev"
@@ -53,17 +112,6 @@ export default function Home() {
         </Link>
       </footer>
     </div>
-  );
-}
-
-// Inline icons keep dependencies light while matching the Battlefield UI motif.
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-      <path d="M4.98 3C3.88 3 3 3.89 3 5s.89 2 1.98 2h.02C6.09 7 7 6.11 7 5S6.11 3 4.98 3z" />
-      <path d="M3.5 8.5h3v12h-3z" />
-      <path d="M9 8.5h2.9v1.7h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6V20.5h-3v-5.5c0-1.31-.02-3-1.9-3-1.9 0-2.2 1.43-2.2 2.9v5.6H9z" />
-    </svg>
   );
 }
 

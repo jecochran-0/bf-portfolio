@@ -26,6 +26,7 @@ export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
             src={badgeSrc}
             alt={badgeAlt}
             fill
+            sizes="(max-width: 768px) 60px, 80px"
             priority
             className={styles.logoImage}
           />
@@ -46,7 +47,6 @@ export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
         </div>
         <Link href="/" aria-label="Return to welcome" className={styles.logoutLink}>
           <span className={styles.logoutIcon}>⎋</span>
-          <span className={styles.logoutLabel}>Logout</span>
         </Link>
       </div>
       <div className={styles.sidebarLine} aria-hidden="true" />
