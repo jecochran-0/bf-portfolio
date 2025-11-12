@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { incrementProgress } from "./utils/progress";
 import styles from "./page.module.css";
 
 // Hero screen for the Battlefield 1 inspired landing page.
@@ -90,11 +91,15 @@ export default function Home() {
       </main>
       <footer className={styles.footer}>
         <Link
-          href="https://www.linkedin.com/in/jake"
+          href="https://www.linkedin.com/in/jake-cochran"
           target="_blank"
           rel="noreferrer"
           aria-label="LinkedIn profile"
           className={styles.social}
+          onClick={() => {
+            incrementProgress();
+            window.dispatchEvent(new CustomEvent("progressUpdated"));
+          }}
         >
           <Image
             src="/assets/linkedin-app-white-icon.webp"
@@ -104,7 +109,7 @@ export default function Home() {
           />
         </Link>
         <Link
-          href="mailto:hello@jake.dev"
+          href="mailto:jake.e.cochran@gmail.com"
           aria-label="Send Jake an email"
           className={styles.social}
         >

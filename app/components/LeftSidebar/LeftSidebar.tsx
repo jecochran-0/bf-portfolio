@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 
+import { incrementProgress } from "../../utils/progress";
 import styles from "./LeftSidebar.module.css";
 
 type SocialLink = {
@@ -18,19 +21,38 @@ interface LeftSidebarProps {
 }
 
 export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
+  const handleSocialClick = () => {
+    incrementProgress();
+    // Trigger a custom event to update the home page if it's mounted
+    window.dispatchEvent(new CustomEvent("progressUpdated"));
+  };
+
+  const handleLogoClick = () => {
+    incrementProgress();
+    window.dispatchEvent(new CustomEvent("progressUpdated"));
+  };
+
   return (
     <aside className={styles.sidebar} aria-label="Profile shortcuts">
       <div className={styles.sidebarRail}>
-        <div className={styles.logoBadge}>
-          <Image
-            src={badgeSrc}
-            alt={badgeAlt}
-            fill
-            sizes="(max-width: 768px) 60px, 80px"
-            priority
-            className={styles.logoImage}
-          />
-        </div>
+        <Link
+          href="https://www.designedby-jake.com/"
+          target="_blank"
+          rel="noreferrer"
+          className={styles.logoBadgeLink}
+          onClick={handleLogoClick}
+        >
+          <div className={styles.logoBadge}>
+            <Image
+              src={badgeSrc}
+              alt={badgeAlt}
+              fill
+              sizes="(max-width: 768px) 60px, 80px"
+              priority
+              className={styles.logoImage}
+            />
+          </div>
+        </Link>
         <div className={styles.iconColumn}>
           {socials.map((social) => (
             <Link
@@ -40,6 +62,7 @@ export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
               rel={social.external ? "noreferrer" : undefined}
               aria-label={social.label}
               className={styles.iconLink}
+              onClick={social.external ? handleSocialClick : undefined}
             >
               <span className={styles.iconWrapper}>{social.icon}</span>
             </Link>

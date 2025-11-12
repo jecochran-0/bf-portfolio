@@ -17,6 +17,16 @@
   height: 100%;
 }
 
+.logoBadgeLink {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.logoBadgeLink:hover {
+  transform: translateX(4px);
+}
+
 .logoBadge {
   position: relative;
   width: 42px;

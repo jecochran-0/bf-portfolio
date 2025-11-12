@@ -34,7 +34,7 @@ const BACKGROUND_SOURCES = [
 
 const SOCIAL_LINKS = [
   {
-    href: "https://www.linkedin.com/in/jake",
+    href: "https://www.linkedin.com/in/jake-cochran",
     label: "LinkedIn",
     icon: (
       <Image
@@ -47,13 +47,13 @@ const SOCIAL_LINKS = [
     external: true,
   },
   {
-    href: "https://twitter.com",
+    href: "https://x.com/Jake_Snake0",
     label: "X",
     icon: <Image src="/assets/x-icon.png" alt="X icon" width={34} height={34} />,
     external: true,
   },
   {
-    href: "mailto:hello@jake.dev",
+    href: "mailto:jake.e.cochran@gmail.com",
     label: "Email",
     icon: <EnvelopeIcon />,
   },

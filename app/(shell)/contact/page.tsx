@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 
 import { EnvelopeIcon } from "../../components/LeftSidebar/LeftSidebar";
+import { incrementProgress } from "../../utils/progress";
 
 import styles from "./page.module.css";
 
@@ -8,7 +11,7 @@ const contactCards = [
   {
     title: "Business",
     subtitle: "designedby-jake.com",
-    href: "https://designedbyjake.com",
+    href: "https://www.designedby-jake.com/",
     icon: (
       <Image
         src="/assets/DBJ-Logo.png"
@@ -20,7 +23,7 @@ const contactCards = [
   },
   {
     title: "LinkedIn",
-    href: "https://www.linkedin.com/in/jake",
+    href: "https://www.linkedin.com/in/jake-cochran",
     icon: (
       <Image
         src="/assets/linkedin-app-white-icon.webp"
@@ -32,24 +35,29 @@ const contactCards = [
   },
   {
     title: "GitHub",
-    href: "https://github.com",
+    href: "https://github.com/jecochran-0",
     icon: <GitHubIcon />,
   },
   {
     title: "Twitter",
-    href: "https://twitter.com",
+    href: "https://x.com/Jake_Snake0",
     icon: (
       <Image src="/assets/x-icon.png" alt="X icon" width={64} height={64} />
     ),
   },
   {
     title: "Mail",
-    href: "mailto:hello@jake.dev",
+    href: "mailto:jake.e.cochran@gmail.com",
     icon: <EnvelopeIcon />,
   },
 ];
 
 export default function ContactPage() {
+  const handleSocialClick = () => {
+    incrementProgress();
+    window.dispatchEvent(new CustomEvent("progressUpdated"));
+  };
+
   return (
     <>
       <div data-shell-content className={styles.page}>
@@ -59,20 +67,27 @@ export default function ContactPage() {
             <a href="mailto:jake.e.cochran@gmail.com">
               <span>jake.e.cochran@gmail.com</span>
             </a>
-            <a href="mailto:designedbyjake.co@gmail.com">
-              <span>designedbyjake.co@gmail.com</span>
-            </a>
           </section>
           <section className={styles.grid} aria-label="Contact methods">
-            {contactCards.map((card) => (
-              <a key={card.title} href={card.href} className={styles.card}>
-                <div className={styles.cardHeader}>{card.icon}</div>
-                <div>
-                  <p className={styles.cardTitle}>{card.title}</p>
-                  <p className={styles.cardSubtitle}>{card.subtitle}</p>
-                </div>
-              </a>
-            ))}
+            {contactCards.map((card) => {
+              const isExternal = card.href.startsWith("http");
+              return (
+                <a
+                  key={card.title}
+                  href={card.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
+                  className={styles.card}
+                  onClick={isExternal ? handleSocialClick : undefined}
+                >
+                  <div className={styles.cardHeader}>{card.icon}</div>
+                  <div>
+                    <p className={styles.cardTitle}>{card.title}</p>
+                    <p className={styles.cardSubtitle}>{card.subtitle}</p>
+                  </div>
+                </a>
+              );
+            })}
           </section>
         </div>
       </div>

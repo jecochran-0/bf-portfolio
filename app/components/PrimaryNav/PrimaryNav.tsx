@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { incrementProgress } from "../../utils/progress";
 import styles from "./PrimaryNav.module.css";
 
 export type PrimaryNavItem = {
@@ -103,6 +104,14 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
     }, RETURN_DELAY);
   };
 
+  const handleNavClick = (href: string) => {
+    // Only track navigation to tabs other than home
+    if (href !== "/home") {
+      incrementProgress();
+      window.dispatchEvent(new CustomEvent("progressUpdated"));
+    }
+  };
+
   return (
     <div className={styles.navWrapper} ref={containerRef}>
       <div className={styles.track} aria-hidden="true" />
@@ -131,6 +140,7 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
             onMouseLeave={handleLeave}
             onFocus={() => handleHover(item.href)}
             onBlur={handleLeave}
+            onClick={() => handleNavClick(item.href)}
           >
             {item.label}
           </Link>

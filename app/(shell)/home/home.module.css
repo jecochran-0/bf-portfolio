@@ -31,6 +31,12 @@
   align-items: stretch;
 }
 
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .card {
   background: rgba(0, 0, 0, 0.49);
   border-radius: 0;
@@ -180,6 +186,27 @@
   flex-direction: column;
   gap: 6px;
   text-align: center;
+}
+
+.tipUnlocked {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.tipQuote {
+  font-size: clamp(0.7rem, 0.24vw + 0.66rem, 0.8rem);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  margin: 8px 0 4px 0;
+}
+
+.tipAuthor {
+  font-size: clamp(0.62rem, 0.24vw + 0.58rem, 0.7rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 4px;
 }
 
 @media (max-width: 1024px) {
