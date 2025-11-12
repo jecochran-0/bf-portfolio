@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FaRegFileAlt, FaQuestionCircle } from "react-icons/fa";
 
 import styles from "./home.module.css";
 
@@ -61,7 +62,7 @@ export default function HomeScreen() {
           <section className={styles.progressRow} aria-label="Progress trackers">
             <div className={styles.progressTile}>
               <div className={styles.tileIcon}>
-                <NotebookIcon />
+                <FaRegFileAlt />
               </div>
               <div className={styles.tileCopy}>
                 <p className={styles.tileTitle}>Learn About Jake</p>
@@ -70,7 +71,7 @@ export default function HomeScreen() {
             </div>
             <div className={`${styles.progressTile} ${styles.tipTile}`}>
               <div className={styles.tileIcon}>
-                <QuestionIcon />
+                <FaQuestionCircle />
               </div>
               <div className={styles.tipCopy}>
                 <p className={styles.tileTitle}>UX Tip Unlock</p>
@@ -80,22 +81,6 @@ export default function HomeScreen() {
         </main>
       </div>
     </>
-  );
-}
-
-function NotebookIcon() {
-  return (
-    <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-      <path d="M7 4.5h8.8a1.6 1.6 0 0 1 1.6 1.6v11.8a1.6 1.6 0 0 1-1.6 1.6H7a1.6 1.6 0 0 1-1.6-1.6V6.1A1.6 1.6 0 0 1 7 4.5Zm0 1.8v11.8c0 .11.09.2.2.2h7.9a.2.2 0 0 0 .2-.2V6.3a.2.2 0 0 0-.2-.2Zm2.2 1.7h4.3v1.1h-4.3Zm0 3.1h4.3v1.1h-4.3Zm0 3.1h2.7v1.1h-2.7Z" />
-    </svg>
-  );
-}
-
-function QuestionIcon() {
-  return (
-    <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-      <path d="M12 5c-2.1 0-3.6 1.3-3.6 3h1.8c0-.8.8-1.3 1.8-1.3s1.8.5 1.8 1.4c0 .7-.5 1.1-1.5 1.6l-.6.3c-1.3.7-1.9 1.4-1.9 2.6V14h1.8v-.3c0-.8.3-1.1 1.2-1.6 1.2-.6 2.1-1.4 2.1-2.8C15.1 6.4 13.7 5 12 5Zm0 11.6c-.8 0-1.4.6-1.4 1.4S11.2 19.4 12 19.4s1.4-.6 1.4-1.4-.6-1.4-1.4-1.4Z" />
-    </svg>
   );
 }
 

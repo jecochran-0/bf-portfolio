@@ -6,6 +6,7 @@ import {
   AnimatePresence,
   motion,
   useReducedMotion,
+  useSpring,
 } from "framer-motion";
 import {
   Children,
@@ -58,6 +59,13 @@ const SOCIAL_LINKS = [
   },
 ];
 
+const TAB_CAMERA_POSITIONS: Record<string, number> = {
+  "/home": -40,
+  "/projects": -10,
+  "/about": 10,
+  "/contact": 40,
+};
+
 type ShellLayoutProps = {
   children: ReactNode;
 };
@@ -73,12 +81,15 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const childArray = Children.toArray(children);
 
   const contentNode =
-    childArray.find((child): child is ReactElement =>
-      isValidElement(child) && child.props?.["data-shell-content"]
-    ) ??
-    (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
-
-  const memoContent = useMemo(() => ({ path: pathname, node: contentNode }), [pathname]);
+     childArray.find((child): child is ReactElement =>
+       isValidElement(child) && child.props?.["data-shell-content"]
+     ) ??
+     (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
+ 
+  const memoContent = useMemo(
+    () => ({ path: pathname, node: contentNode }),
+    [pathname, contentNode]
+  );
 
   const currentIndex = useMemo(() => {
     const match = PRIMARY_NAV_ITEMS.findIndex((item) =>
@@ -86,23 +97,62 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     );
     return match >= 0 ? match : 0;
   }, [pathname]);
-
-  const previousIndexRef = useRef(currentIndex);
-  const directionRef = useRef<number>(1);
+ 
+   const previousIndexRef = useRef(currentIndex);
+   const directionRef = useRef<number>(1);
+ 
+   useEffect(() => {
+     const previous = previousIndexRef.current;
+     if (previous !== currentIndex) {
+      directionRef.current = currentIndex > previous ? 1 : -1;
+       previousIndexRef.current = currentIndex;
+     }
+   }, [currentIndex]);
+ 
+   const targetBackgroundX = useMemo(() => {
+     const pathMatch = PRIMARY_NAV_ITEMS.find((item) => pathname.startsWith(item.href));
+     const key = pathMatch?.href ?? "/home";
+     return TAB_CAMERA_POSITIONS[key] ?? 0;
+   }, [pathname]);
+ 
+  const backgroundSpring = useSpring(targetBackgroundX, {
+    stiffness: 120,
+    damping: 20,
+    mass: 0.9,
+  });
 
   useEffect(() => {
-    const previous = previousIndexRef.current;
-    if (previous !== currentIndex) {
-      directionRef.current = currentIndex > previous ? 1 : -1;
-      previousIndexRef.current = currentIndex;
+    if (prefersReducedMotion) {
+      backgroundSpring.set(targetBackgroundX);
+      return;
     }
-  }, [currentIndex]);
+    backgroundSpring.set(targetBackgroundX);
+  }, [targetBackgroundX, prefersReducedMotion, backgroundSpring]);
+
+  const pageVariants = {
+    initial: (dir: number) =>
+      prefersReducedMotion
+        ? { opacity: 1, x: 0, filter: "brightness(1)" }
+        : { opacity: 0, x: dir * 140, filter: "brightness(1.05)" },
+    animate: { opacity: 1, x: 0, filter: "brightness(1)" },
+    exit: (dir: number) =>
+      prefersReducedMotion
+        ? { opacity: 1, x: 0, filter: "brightness(1)" }
+        : { opacity: 0, x: -dir * 140, filter: "brightness(0.65)" },
+  } as const;
+
+  const pageTransition = {
+    duration: prefersReducedMotion ? 0 : 0.62,
+    ease: [0.25, 0.8, 0.25, 1],
+  } as const;
+ 
+  const animationDurationMs = pageTransition.duration * 1000;
 
   const [transitionState, setTransitionState] = useState<TransitionState>(() => ({
     current: memoContent,
     exiting: null,
-    direction: 1,
     entering: null,
+    direction: 1,
   }));
 
   useEffect(() => {
@@ -110,25 +160,28 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       if (memoContent.path === prev.current.path) {
         return prev;
       }
+
+      const visible = prev.entering ?? prev.exiting ?? prev.current;
+
       return {
         current: memoContent,
-        exiting: prev.current,
+        exiting: visible,
         entering: null,
         direction: directionRef.current,
       };
     });
   }, [memoContent]);
 
-  const isAnimating = Boolean(transitionState.exiting || transitionState.entering);
+  const isTransitioning = Boolean(transitionState.exiting || transitionState.entering);
 
-  const transitionDuration = prefersReducedMotion ? 0 : 0.95;
+  const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 
   const exitVariants = {
     present: { opacity: 1, x: 0, filter: "brightness(1)" },
     exit: (dir: number) => ({
       opacity: 0,
-      x: dir * -160,
+      x: dir * -150,
       filter: "brightness(0.6)",
       transition: { duration: transitionDuration, ease: easing },
     }),
@@ -137,7 +190,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const enterVariants = {
     initial: (dir: number) => ({
       opacity: 0,
-      x: dir * 160,
+      x: dir * 150,
       filter: "brightness(1.08)",
     }),
     animate: {
@@ -150,14 +203,14 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
 
   const handleExitComplete = () => {
     setTransitionState((prev) => {
-      if (!prev.entering && prev.exiting) {
-        return {
-          ...prev,
-          entering: prev.current,
-          exiting: null,
-        };
+      if (!prev.exiting) {
+        return prev;
       }
-      return prev;
+      return {
+        ...prev,
+        entering: prev.current,
+        exiting: null,
+      };
     });
   };
 
@@ -172,27 +225,35 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       </div>
       <div className={styles.main}>
         <div className={styles.backgroundLayer}>
-          <Image
-            src={backgroundSrc}
-            alt="Battlefield ambience"
-            fill
-            priority
-            className={styles.backgroundImage}
-          />
+          <motion.div
+            className={styles.backgroundMotion}
+            style={{
+              x: prefersReducedMotion ? targetBackgroundX : backgroundSpring,
+              scale: prefersReducedMotion ? 1 : 1.08,
+            }}
+          >
+            <Image
+              src={backgroundSrc}
+              alt="Battlefield ambience"
+              fill
+              priority
+              className={styles.backgroundImage}
+            />
+          </motion.div>
           <div className={styles.backgroundScrim} />
         </div>
 
         <div
           className={styles.navFrame}
-          style={{ pointerEvents: isAnimating ? "none" : "auto" }}
+          style={{ pointerEvents: isTransitioning ? "none" : "auto" }}
         >
           <PrimaryNav items={PRIMARY_NAV_ITEMS} activeHref={pathname} />
         </div>
 
         <div className={styles.stage}>
           <AnimatePresence
-            initial={false}
             mode="wait"
+            custom={transitionState.direction}
             onExitComplete={handleExitComplete}
           >
             {transitionState.exiting ? (
@@ -208,6 +269,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 {transitionState.exiting.node}
               </motion.div>
             ) : transitionState.entering ? (
+              (() => {
+                const enteringPath = transitionState.entering?.path;
+                return (
               <motion.div
                 key={`enter-${transitionState.entering.path}`}
                 custom={transitionState.direction}
@@ -215,22 +279,25 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                onAnimationComplete={() =>
-                  setTransitionState((prev) =>
-                    prev.entering ? { ...prev, entering: null } : prev
-                  )
-                }
+                onAnimationComplete={(definition) => {
+                  if (definition === "animate" && enteringPath) {
+                    setTransitionState((prev) =>
+                      prev.entering && prev.entering.path === enteringPath
+                        ? { ...prev, entering: null }
+                        : prev
+                    );
+                  }
+                }}
                 className={styles.transitionLayer}
               >
                 {transitionState.entering.node}
               </motion.div>
+                );
+              })()
             ) : (
-              <motion.div
-                key={`static-${transitionState.current.path}`}
-                className={styles.transitionLayer}
-              >
+              <div key={`static-${transitionState.current.path}`} className={styles.transitionLayer}>
                 {transitionState.current.node}
-              </motion.div>
+              </div>
             )}
           </AnimatePresence>
         </div>
@@ -242,8 +309,8 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
 type TransitionState = {
   current: ContentItem;
   exiting: ContentItem | null;
-  direction: number;
   entering: ContentItem | null;
+  direction: number;
 };
 
 type ContentItem = {

@@ -120,7 +120,7 @@
   align-items: center;
   justify-content: space-between;
   gap: clamp(20px, 3vw, 32px);
-  background: linear-gradient(180deg, rgba(7, 10, 16, 0.86) 0%, rgba(7, 10, 16, 0.68) 100%);
+  background: rgba(0, 0, 0, 0.49);
   box-shadow: 0 20px 46px rgba(0, 0, 0, 0.45);
   border-radius: 0;
 }
@@ -172,6 +172,7 @@
   align-items: center;
   text-align: center;
   gap: clamp(14px, 2.4vw, 22px);
+  background: rgba(0, 0, 0, 0.49);
 }
 
 .tipCopy {

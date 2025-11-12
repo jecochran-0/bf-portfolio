@@ -29,14 +29,24 @@
   overflow: hidden;
 }
 
+.backgroundMotion {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
 .backgroundImage {
   object-fit: cover;
+  transform-origin: center;
+  filter: blur(5px);
 }
 
 .backgroundScrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 9, 16, 0.6) 0%, rgba(6, 9, 16, 0.35) 40%, rgba(6, 9, 16, 0.25) 100%);
+  background: linear-gradient(180deg, rgba(6, 9, 16, 0.7) 0%, rgba(6, 9, 16, 0.45) 40%, rgba(6, 9, 16, 0.32) 100%);
+  backdrop-filter: blur(2.6px);
+  -webkit-backdrop-filter: blur(2.6px);
 }
 
 .navFrame {

@@ -12,9 +12,10 @@ type Project = {
 
 interface ProjectRowProps {
   projects: Project[];
+  cardClassName?: string;
 }
 
-export function ProjectRow({ projects }: ProjectRowProps) {
+export function ProjectRow({ projects, cardClassName }: ProjectRowProps) {
   const rowRef = useRef<HTMLDivElement | null>(null);
   const [showArrow, setShowArrow] = useState(false);
 
@@ -52,7 +53,10 @@ export function ProjectRow({ projects }: ProjectRowProps) {
     <div className={styles.rowWrapper}>
       <div className={styles.row} ref={rowRef}>
         {projects.map((project, index) => (
-          <article key={`${project.title}-${index}`} className={styles.card}>
+          <article
+            key={`${project.title}-${index}`}
+            className={`${styles.card} ${cardClassName ?? ""}`.trim()}
+          >
             <div className={styles.cardImage}>Placeholder</div>
             <div className={styles.cardBody}>
               <h3 className={styles.cardTitle}>{project.title}</h3>

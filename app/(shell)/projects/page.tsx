@@ -31,14 +31,14 @@ export default function ProjectsPage() {
             <header className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>UX Design</h2>
             </header>
-            <ProjectRow projects={uxProjects} />
+            <ProjectRow projects={uxProjects} cardClassName={styles.projectCard} />
           </section>
 
           <section className={styles.section}>
             <header className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Software Development</h2>
             </header>
-            <ProjectRow projects={devProjects} />
+            <ProjectRow projects={devProjects} cardClassName={styles.projectCard} />
           </section>
         </div>
       </div>

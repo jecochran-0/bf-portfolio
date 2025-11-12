@@ -249,7 +249,7 @@ const CheckmarkIcon = () => (
 );
 
 export default function AboutPage() {
-  const [activeTabId, setActiveTabId] = useState<TabDefinition["id"]>("skills");
+  const [activeTabId, setActiveTabId] = useState<TabDefinition["id"]>("personal");
   const activeTab = useMemo(
     () => tabs.find((tab) => tab.id === activeTabId) ?? tabs[0],
     [activeTabId]
