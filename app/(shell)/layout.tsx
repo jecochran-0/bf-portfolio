@@ -101,12 +101,15 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
 
   const childArray = Children.toArray(children);
 
+  const hasDataShellContent = (child: unknown): child is ReactElement<Record<string, unknown>> => {
+    if (!isValidElement(child)) return false;
+    const props = child.props as Record<string, unknown> | null | undefined;
+    if (typeof props !== "object" || props === null) return false;
+    return "data-shell-content" in props;
+  };
+
   const contentNode =
-     childArray.find((child): child is ReactElement<Record<string, unknown>> => {
-       if (!isValidElement(child)) return false;
-       const props = child.props as Record<string, unknown>;
-       return typeof props === "object" && props !== null && "data-shell-content" in props;
-     }) ??
+     childArray.find(hasDataShellContent) ??
      (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
  
   const memoContent = useMemo(

@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     // Don't fail build on type errors (but still show them)
     ignoreBuildErrors: false,
   },
+  // Ensure clean builds
+  swcMinify: true,
 };
 
 export default nextConfig;
