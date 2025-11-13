@@ -198,6 +198,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 
+  // Track entering path to ensure animation complete callback works
+  const enteringPathRef = useRef<string | null>(null);
+
   // Only trigger transitions on pathname changes, not on contentNode re-renders
   useEffect(() => {
     // Skip if not mounted yet (SSR)
@@ -206,6 +209,15 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     setTransitionState((prev) => {
       // Only update if pathname actually changed
       if (pathname === prev.current.path) {
+        // If pathname matches but we're still transitioning, clear stuck state
+        if (prev.exiting || prev.entering) {
+          return {
+            ...prev,
+            current: { path: pathname, node: contentNode },
+            exiting: null,
+            entering: null,
+          };
+        }
         // Update the node reference without triggering transition
         return {
           ...prev,
@@ -214,6 +226,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       }
 
       const visible = prev.entering ?? prev.exiting ?? prev.current;
+      enteringPathRef.current = pathname;
 
       return {
         current: { path: pathname, node: contentNode },
@@ -335,11 +348,8 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
           <div className={styles.backgroundScrim} />
         </div>
 
-        <div
-          className={styles.navFrame}
-          style={{ pointerEvents: isTransitioning ? "none" : "auto" }}
-        >
-          <PrimaryNav items={PRIMARY_NAV_ITEMS} activeHref={pathname} />
+        <div className={styles.navFrame}>
+          <PrimaryNav items={PRIMARY_NAV_ITEMS} activeHref={pathname} isTransitioning={isTransitioning} />
         </div>
 
         <div className={styles.stage}>
@@ -371,12 +381,15 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                   exit="exit"
                   onAnimationComplete={(definition) => {
                     if (definition === "animate") {
-                      // Fix: Use prev.entering instead of closure value to avoid stale closure
-                      setTransitionState((prev) =>
-                        prev.entering
-                          ? { ...prev, entering: null }
-                          : prev
-                      );
+                      // Fix: Use prev.entering and ref to ensure we clear the correct transition
+                      setTransitionState((prev) => {
+                        // Only clear if this is still the current entering path
+                        if (prev.entering && prev.entering.path === enteringPathRef.current) {
+                          enteringPathRef.current = null;
+                          return { ...prev, entering: null };
+                        }
+                        return prev;
+                      });
                     }
                   }}
                   className={styles.transitionLayer}

@@ -15,11 +15,12 @@ export type PrimaryNavItem = {
 interface PrimaryNavProps {
   items: PrimaryNavItem[];
   activeHref?: string;
+  isTransitioning?: boolean;
 }
 
 const RETURN_DELAY = 160;
 
-export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
+export function PrimaryNav({ items, activeHref, isTransitioning = false }: PrimaryNavProps) {
   const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -104,7 +105,13 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
     }, RETURN_DELAY);
   };
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, event: React.MouseEvent<HTMLAnchorElement>) => {
+    // Prevent navigation during transitions to avoid state corruption
+    if (isTransitioning) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     // Only track navigation to tabs other than home
     if (href !== "/home") {
       incrementProgress();
@@ -140,7 +147,7 @@ export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
             onMouseLeave={handleLeave}
             onFocus={() => handleHover(item.href)}
             onBlur={handleLeave}
-            onClick={() => handleNavClick(item.href)}
+            onClick={(e) => handleNavClick(item.href, e)}
           >
             {item.label}
           </Link>
