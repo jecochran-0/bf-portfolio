@@ -322,6 +322,9 @@ export default function AboutPage() {
                         <li key={hobby}>{hobby}</li>
                       ))}
                     </ul>
+                    <p className={styles.letterNote}>
+                      This portfolio&apos;s design aesthetic is inspired by Battlefield 1&apos;s UI.
+                    </p>
                   </div>
                 ) : activeTab.id === "skills" ? (
                   <div className={styles.categoryColumn}>

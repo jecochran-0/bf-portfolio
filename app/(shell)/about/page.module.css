@@ -350,6 +350,15 @@
   text-align: center;
 }
 
+.letterNote {
+  font-size: clamp(0.75rem, 0.4vw + 0.72rem, 0.9rem);
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  margin-top: clamp(24px, 3vw, 32px);
+  padding-top: clamp(20px, 2.5vw, 28px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .categoryColumn {
   display: flex;
   flex-direction: column;
