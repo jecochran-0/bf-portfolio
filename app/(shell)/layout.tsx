@@ -156,198 +156,81 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     backgroundSpring.set(targetBackgroundX);
   }, [targetBackgroundX, prefersReducedMotion, backgroundSpring]);
 
-  const pageVariants = {
-    initial: (dir: number) =>
-      prefersReducedMotion
-        ? { opacity: 1, x: 0, filter: "brightness(1)" }
-        : { opacity: 0, x: dir * 140, filter: "brightness(1.05)" },
-    animate: { opacity: 1, x: 0, filter: "brightness(1)" },
-    exit: (dir: number) =>
-      prefersReducedMotion
-        ? { opacity: 1, x: 0, filter: "brightness(1)" }
-        : { opacity: 0, x: -dir * 140, filter: "brightness(0.65)" },
-  } as const;
-
-  const pageTransition = {
-    duration: prefersReducedMotion ? 0 : 0.62,
-    ease: [0.25, 0.8, 0.25, 1],
-  } as const;
- 
-  const animationDurationMs = pageTransition.duration * 1000;
 
   // Initialize state after mount to avoid SSR/client mismatch
-  const [transitionState, setTransitionState] = useState<TransitionState>(() => ({
-    current: { path: pathname, node: null },
-    exiting: null,
-    entering: null,
-    direction: 1,
-  }));
-
-  // Initialize with actual content after mount (client-side only)
+  // Simplified transition state - use single key-based system
+  const [transitionKey, setTransitionKey] = useState(pathname);
   const [isMounted, setIsMounted] = useState(false);
+  
   useEffect(() => {
     setIsMounted(true);
-    setTransitionState({
-      current: { path: pathname, node: contentNode },
-      exiting: null,
-      entering: null,
-      direction: 1,
-    });
-  }, []); // Only run once on mount
+  }, []);
 
   const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 
-  // Track entering path and node to ensure animation complete callback works
-  const enteringPathRef = useRef<string | null>(null);
-  const enteringNodeRef = useRef<ReactNode | null>(null);
-
-  // Only trigger transitions on pathname changes, not on contentNode re-renders
+  // Update transition key when pathname changes (triggers AnimatePresence)
   useEffect(() => {
-    // Skip if not mounted yet (SSR)
     if (!isMounted) return;
-
-    setTransitionState((prev) => {
-      // Only update if pathname actually changed
-      if (pathname === prev.current.path) {
-        // If pathname matches but we're still transitioning, clear stuck state immediately
-        // This ensures navigation can proceed even if transition is stuck
-        if (prev.exiting || prev.entering) {
-          enteringPathRef.current = null;
-          return {
-            ...prev,
-            current: { path: pathname, node: contentNode },
-            exiting: null,
-            entering: null,
-          };
-        }
-        // Update the node reference without triggering transition
-        return {
-          ...prev,
-          current: { path: pathname, node: contentNode },
-        };
+    if (pathname !== transitionKey) {
+      // Update direction before changing key
+      const newIndex = PRIMARY_NAV_ITEMS.findIndex((item) =>
+        pathname.startsWith(item.href)
+      );
+      const currentIndex = PRIMARY_NAV_ITEMS.findIndex((item) =>
+        transitionKey.startsWith(item.href)
+      );
+      if (newIndex >= 0 && currentIndex >= 0) {
+        directionRef.current = newIndex > currentIndex ? 1 : -1;
       }
+      setTransitionKey(pathname);
+    }
+  }, [pathname, transitionKey, isMounted]);
 
-      // Pathname changed - start new transition
-      // With mode="wait", set exiting first, entering will be set after exit completes
-      const visible = prev.entering ?? prev.exiting ?? prev.current;
-      enteringPathRef.current = pathname;
-      enteringNodeRef.current = contentNode; // Store the new content node
-
-      // Store the target pathname for after exit completes
-      // Only set exiting, entering will be set in handleExitComplete
-      return {
-        current: { path: pathname, node: contentNode },
-        exiting: visible,
-        entering: null, // Will be set after exit completes
-        direction: directionRef.current,
-      };
-    });
-  }, [pathname, contentNode, isMounted]);
-
-  const isTransitioning = Boolean(transitionState.exiting || transitionState.entering);
+  const isTransitioning = pathname !== transitionKey;
 
   // Safety timeout to clear stuck transition state
-  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     if (isTransitioning) {
-      // Clear any existing timeout
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-      }
-      // Set safety timeout: transition duration + buffer (2x duration for safety)
+      // If transition key doesn't match pathname after timeout, force sync
       const safetyTimeout = (transitionDuration * 1000) * 2 + 500;
-      transitionTimeoutRef.current = setTimeout(() => {
-        setTransitionState((prev) => {
-          // Only clear if still transitioning (stuck state)
-          if (prev.exiting || prev.entering) {
-            console.warn("Transition timeout: clearing stuck transition state", {
-              exiting: prev.exiting?.path,
-              entering: prev.entering?.path,
-              current: prev.current.path,
-            });
-            enteringPathRef.current = null;
-            return {
-              ...prev,
-              exiting: null,
-              entering: null,
-            };
-          }
-          return prev;
-        });
-        transitionTimeoutRef.current = null;
+      const timeout = setTimeout(() => {
+        if (transitionKey !== pathname) {
+          console.warn("Transition timeout: forcing sync", { transitionKey, pathname });
+          setTransitionKey(pathname);
+        }
       }, safetyTimeout);
-    } else {
-      // Clear timeout if not transitioning
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-        transitionTimeoutRef.current = null;
-      }
+      return () => clearTimeout(timeout);
     }
-    return () => {
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-      }
-    };
-  }, [isTransitioning, transitionDuration]);
+  }, [isTransitioning, transitionDuration, transitionKey, pathname]);
 
-  const exitVariants = {
-    present: { opacity: 1, x: 0, filter: "brightness(1)" },
-    exit: (dir: number) => ({
-      opacity: 0,
-      x: dir * -150,
-      filter: "brightness(0.6)",
-      transition: { duration: transitionDuration, ease: easing },
-    }),
-  } as const;
-
-  const enterVariants = {
+  // Single set of variants for both exit and enter
+  const pageVariants = {
     initial: (dir: number) => ({
       opacity: 0,
       x: dir * 150,
       filter: "brightness(1.08)",
-      transition: { duration: 0 }, // Immediate transition to initial state
     }),
     animate: {
       opacity: 1,
       x: 0,
       filter: "brightness(1)",
-      transition: { 
-        duration: transitionDuration, 
+      transition: {
+        duration: transitionDuration,
         ease: easing,
-        // Ensure animation plays in production
-        type: "tween",
+        type: "tween" as const,
       },
     },
-  } as const;
-
-  const handleExitComplete = () => {
-    setTransitionState((prev) => {
-      if (!prev.exiting) {
-        return prev;
-      }
-      // Clear safety timeout when exit completes successfully
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-        transitionTimeoutRef.current = null;
-      }
-      // After exit completes, set entering state if we have a pending pathname change
-      // This ensures the enter animation plays properly in production
-      const pendingPath = enteringPathRef.current;
-      const pendingNode = enteringNodeRef.current;
-      if (pendingPath && pendingNode && pendingPath !== prev.current.path) {
-        // Use the stored node for the pending path
-        return {
-          ...prev,
-          exiting: null,
-          entering: { path: pendingPath, node: pendingNode },
-        };
-      }
-      return {
-        ...prev,
-        exiting: null,
-      };
-    });
+    exit: (dir: number) => ({
+      opacity: 0,
+      x: dir * -150,
+      filter: "brightness(0.6)",
+      transition: {
+        duration: transitionDuration,
+        ease: easing,
+        type: "tween" as const,
+      },
+    }),
   };
 
   return (
@@ -387,65 +270,20 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
           <TransitionErrorBoundary>
             <AnimatePresence
               mode="wait"
-              custom={transitionState.direction}
-              onExitComplete={handleExitComplete}
+              custom={directionRef.current}
               initial={false}
             >
-              {transitionState.exiting ? (
-                <motion.div
-                  key={`exit-${transitionState.exiting.path}`}
-                  custom={transitionState.direction}
-                  variants={exitVariants}
-                  initial="present"
-                  animate="present"
-                  exit="exit"
-                  className={styles.transitionLayer}
-                >
-                  {transitionState.exiting.node}
-                </motion.div>
-              ) : transitionState.entering ? (
-                <motion.div
-                  key={`enter-${transitionState.entering.path}`}
-                  custom={transitionState.direction}
-                  variants={enterVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  onAnimationStart={(definition) => {
-                    // Ensure animation starts in production
-                    if (definition === "animate") {
-                      // Force a reflow to ensure animation plays
-                      const element = document.querySelector(`[data-transition-key="enter-${transitionState.entering?.path}"]`);
-                      if (element) {
-                        (element as HTMLElement).offsetHeight; // Force reflow
-                      }
-                    }
-                  }}
-                  onAnimationComplete={(definition) => {
-                    if (definition === "animate") {
-                      // Fix: Use prev.entering and ref to ensure we clear the correct transition
-                      setTransitionState((prev) => {
-                        // Always clear entering state when animation completes
-                        // This ensures transitions don't get stuck
-                        if (prev.entering) {
-                          enteringPathRef.current = null;
-                          enteringNodeRef.current = null;
-                          return { ...prev, entering: null };
-                        }
-                        return prev;
-                      });
-                    }
-                  }}
-                  data-transition-key={`enter-${transitionState.entering.path}`}
-                  className={styles.transitionLayer}
-                >
-                  {transitionState.entering.node}
-                </motion.div>
-              ) : transitionState.current.node ? (
-                <div key={`static-${transitionState.current.path}`} className={styles.transitionLayer}>
-                  {transitionState.current.node}
-                </div>
-              ) : null}
+              <motion.div
+                key={transitionKey}
+                custom={directionRef.current}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className={styles.transitionLayer}
+              >
+                {contentNode}
+              </motion.div>
             </AnimatePresence>
           </TransitionErrorBoundary>
         </div>
@@ -454,14 +292,3 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   );
 }
 
-type TransitionState = {
-  current: ContentItem;
-  exiting: ContentItem | null;
-  entering: ContentItem | null;
-  direction: number;
-};
-
-type ContentItem = {
-  path: string;
-  node: ReactNode;
-};
