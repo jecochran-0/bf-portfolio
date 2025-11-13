@@ -140,7 +140,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
      const key = pathMatch?.href ?? "/home";
      return TAB_CAMERA_POSITIONS[key] ?? 0;
    }, [pathname]);
- 
+
   const backgroundSpring = useSpring(targetBackgroundX, {
     stiffness: 120,
     damping: 20,
@@ -181,22 +181,28 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     direction: 1,
   }));
 
+  // Only trigger transitions on pathname changes, not on contentNode re-renders
   useEffect(() => {
     setTransitionState((prev) => {
-      if (memoContent.path === prev.current.path) {
-        return prev;
+      // Only update if pathname actually changed
+      if (pathname === prev.current.path) {
+        // Update the node reference without triggering transition
+        return {
+          ...prev,
+          current: { path: pathname, node: contentNode },
+        };
       }
 
       const visible = prev.entering ?? prev.exiting ?? prev.current;
 
       return {
-        current: memoContent,
+        current: { path: pathname, node: contentNode },
         exiting: visible,
-        entering: null,
+        entering: { path: pathname, node: contentNode },
         direction: directionRef.current,
       };
     });
-  }, [memoContent]);
+  }, [pathname, contentNode]);
 
   const isTransitioning = Boolean(transitionState.exiting || transitionState.entering);
 
@@ -234,7 +240,6 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       }
       return {
         ...prev,
-        entering: prev.current,
         exiting: null,
       };
     });
@@ -295,9 +300,6 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 {transitionState.exiting.node}
               </motion.div>
             ) : transitionState.entering ? (
-              (() => {
-                const enteringPath = transitionState.entering?.path;
-                return (
               <motion.div
                 key={`enter-${transitionState.entering.path}`}
                 custom={transitionState.direction}
@@ -306,9 +308,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 animate="animate"
                 exit="exit"
                 onAnimationComplete={(definition) => {
-                  if (definition === "animate" && enteringPath) {
+                  if (definition === "animate") {
                     setTransitionState((prev) =>
-                      prev.entering && prev.entering.path === enteringPath
+                      prev.entering && prev.entering.path === transitionState.entering?.path
                         ? { ...prev, entering: null }
                         : prev
                     );
@@ -318,8 +320,6 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
               >
                 {transitionState.entering.node}
               </motion.div>
-                );
-              })()
             ) : (
               <div key={`static-${transitionState.current.path}`} className={styles.transitionLayer}>
                 {transitionState.current.node}
