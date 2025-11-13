@@ -102,8 +102,8 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const childArray = Children.toArray(children);
 
   const contentNode =
-     childArray.find((child): child is ReactElement =>
-       isValidElement(child) && child.props?.["data-shell-content"]
+     childArray.find((child): child is ReactElement<{ "data-shell-content"?: boolean }> =>
+       isValidElement(child) && (child.props as { "data-shell-content"?: boolean })?.["data-shell-content"]
      ) ??
      (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
  
