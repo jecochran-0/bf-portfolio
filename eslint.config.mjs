@@ -1,6 +1,3 @@
-// Minimal ESLint config for Next.js 15
-export default [
-  {
-    ignores: [".next/**", "out/**", "build/**", "node_modules/**"],
-  },
-];
+// ESLint config - linting disabled during builds via next.config.ts
+export default [];
+
