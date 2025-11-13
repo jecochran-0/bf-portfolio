@@ -36,3 +36,10 @@ export function isTipUnlocked(): boolean {
   return getProgress() >= MAX_PROGRESS;
 }
 
+export function resetProgress(): void {
+  const storage = getStorage();
+  if (!storage) return;
+  
+  storage.removeItem(PROGRESS_KEY);
+}
+

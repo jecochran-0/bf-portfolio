@@ -24,12 +24,27 @@
   align-items: start;
 }
 
+@media (max-width: 768px) {
+  .mainArea {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: clamp(24px, 4vw, 32px);
+  }
+}
+
 .leftStack {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(160px, 1fr);
   column-gap: clamp(44px, 4.8vw, 68px);
   row-gap: clamp(24px, 3.2vw, 32px);
   align-items: start;
+}
+
+@media (max-width: 768px) {
+  .leftStack {
+    grid-template-columns: 1fr;
+    row-gap: clamp(20px, 3vw, 28px);
+  }
 }
 
 .introHeading {
@@ -69,6 +84,13 @@
   font-weight: 500;
   font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
   padding-top: clamp(10px, 1vw, 16px);
+}
+
+@media (max-width: 768px) {
+  .tabList {
+    gap: clamp(16px, 3vw, 24px);
+    font-size: clamp(0.85rem, 0.5vw + 0.8rem, 1rem);
+  }
 }
 
 .tabButton {
@@ -125,6 +147,14 @@
   padding-right: clamp(8px, 1vw, 14px);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+@media (max-width: 768px) {
+  .panelScrollArea {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
 }
 
 .panelScrollArea::-webkit-scrollbar {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { incrementProgress } from "./utils/progress";
+import { incrementProgress, resetProgress } from "./utils/progress";
 import styles from "./page.module.css";
 
 // Hero screen for the Battlefield 1 inspired landing page.
@@ -13,6 +13,11 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const [isFadingOut, setIsFadingOut] = useState(false);
+
+  useEffect(() => {
+    // Reset UX tip progress when welcome screen loads
+    resetProgress();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;

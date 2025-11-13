@@ -22,6 +22,7 @@
 @media (max-width: 768px) {
   .wrapRow {
     grid-template-columns: 1fr;
+    gap: clamp(16px, 3vw, 24px);
   }
 }
 
@@ -40,6 +41,17 @@
   flex: 1 1 auto;
   width: 100%;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    overflow-x: visible;
+    overflow-y: visible;
+    cursor: default;
+    touch-action: auto;
+    gap: clamp(16px, 3vw, 24px);
+  }
 }
 
 .row.dragging {
@@ -75,6 +87,12 @@
   transform: translateY(-50%) scale(1.04);
 }
 
+@media (max-width: 768px) {
+  .carouselButton {
+    display: none;
+  }
+}
+
 .carouselButton:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.85);
   outline-offset: 3px;
@@ -100,6 +118,14 @@
   flex-shrink: 0;
   pointer-events: auto;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cardLink {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 .wrapRow .cardLink {
@@ -215,6 +241,13 @@
 .fadeRight {
   right: clamp(0px, 0.8vw, 12px);
   background: linear-gradient(90deg, transparent, rgba(8, 10, 16, 0.82));
+}
+
+@media (max-width: 768px) {
+  .fadeLeft,
+  .fadeRight {
+    display: none;
+  }
 }
 
 .card {

@@ -6,6 +6,13 @@
   color: rgba(255, 255, 255, 0.92);
 }
 
+@media (max-width: 768px) {
+  .page {
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
 .content {
   position: relative;
   z-index: 1;
@@ -15,6 +22,15 @@
   row-gap: clamp(28px, 3.6vw, 42px);
   align-items: start;
   padding-top: clamp(18px, 3vw, 36px);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .content {
+    justify-content: center;
+    justify-items: center;
+    place-items: center;
+  }
 }
 
 .intro {
@@ -95,9 +111,51 @@
 @media (max-width: 960px) {
   .content {
     grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 100%;
+    max-width: 600px;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    place-items: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .intro {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .intro a {
+    justify-content: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+    justify-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
 }

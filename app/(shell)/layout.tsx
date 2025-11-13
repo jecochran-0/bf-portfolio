@@ -250,7 +250,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
             className={styles.backgroundMotion}
             style={{
               x: prefersReducedMotion ? targetBackgroundX : backgroundSpring,
-              scale: prefersReducedMotion ? 1 : 1.08,
+              scale: prefersReducedMotion ? 1 : 1.25,
             }}
           >
             <Image

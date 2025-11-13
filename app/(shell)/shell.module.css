@@ -5,8 +5,17 @@
   gap: clamp(18px, 4vw, 44px);
   padding: clamp(24px, 4.5vw, 52px);
   padding-left: clamp(12px, 2vw, 24px);
-  padding-bottom: clamp(24px, 4.5vw, 52px);
+  padding-bottom: clamp(48px, 8vw, 80px);
   overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+    padding: clamp(16px, 4vw, 24px);
+    padding-bottom: clamp(32px, 6vw, 48px);
+    gap: clamp(16px, 3vw, 24px);
+  }
 }
 
 @keyframes fadeIn {
@@ -30,6 +39,16 @@
   height: calc(100vh - clamp(24px, 4.5vw, 52px) * 2);
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    left: auto;
+    top: auto;
+    height: auto;
+    width: 100%;
+  }
+}
+
 .main {
   position: relative;
   z-index: 3;
@@ -39,6 +58,14 @@
   margin-left: calc(clamp(60px, 8vw, 100px) + clamp(18px, 4vw, 44px));
   width: calc(100% - clamp(60px, 8vw, 100px) - clamp(18px, 4vw, 44px));
   flex: 1 1 auto;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    width: 100%;
+    gap: clamp(16px, 3vw, 24px);
+  }
 }
 
 .backgroundLayer {
@@ -76,13 +103,26 @@
   z-index: 3;
 }
 
+@media (max-width: 768px) {
+  .navFrame {
+    max-width: 100%;
+  }
+}
+
 .stage {
   position: relative;
   z-index: 2;
   flex: 1 1 auto;
   min-height: calc(100vh - clamp(24px, 4.5vw, 52px) * 2);
   overflow: visible;
-  padding-bottom: clamp(24px, 4.5vw, 52px);
+  padding-bottom: clamp(48px, 8vw, 80px);
+}
+
+@media (max-width: 768px) {
+  .stage {
+    min-height: auto;
+    padding-bottom: clamp(32px, 6vw, 48px);
+  }
 }
 
 .transitionLayer {

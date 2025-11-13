@@ -7,6 +7,13 @@
   color: rgba(255, 255, 255, 0.92);
 }
 
+@media (max-width: 768px) {
+  .page {
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
 .content {
   position: relative;
   z-index: 1;
@@ -15,6 +22,17 @@
   gap: clamp(20px, 3.5vw, 32px);
   max-width: min(72vw, 1100px);
   margin-right: auto;
+  padding-bottom: clamp(24px, 4vw, 40px);
+}
+
+@media (max-width: 768px) {
+  .content {
+    max-width: 100%;
+    gap: clamp(16px, 3vw, 24px);
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+  }
 }
 
 .greeting p {
@@ -24,11 +42,33 @@
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
+@media (max-width: 768px) {
+  .greeting {
+    text-align: center;
+    width: 100%;
+  }
+}
+
 .featured {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.88fr);
   gap: clamp(12px, 2.4vw, 22px);
   align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .featured {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .featured {
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 3vw, 20px);
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .cardLink {
@@ -117,6 +157,15 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(14px, 2.6vw, 26px);
   max-width: min(55vw, 780px);
+}
+
+@media (max-width: 768px) {
+  .progressRow {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    width: 100%;
+    gap: clamp(16px, 3vw, 20px);
+  }
 }
 
 .progressTile {
@@ -209,54 +258,29 @@
   margin-top: 4px;
 }
 
-@media (max-width: 1024px) {
-  .layout {
-    grid-template-columns: auto 1fr;
-    gap: 28px;
-  }
-
-  .sidebarLine {
-    left: 60px;
-  }
-
-  .featured {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-
-  .progressRow {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-    padding: 24px;
+  .card {
+    min-height: clamp(200px, 40vw, 280px);
   }
 
-  .sidebarLine {
-    display: none;
+  .cardCopy {
+    padding: clamp(16px, 3vw, 20px) clamp(18px, 3vw, 24px) clamp(18px, 3vw, 22px);
   }
 
-  .sidebar {
-    flex-direction: row;
-    align-items: center;
-    gap: 24px;
-    padding-left: 0;
+  .progressTile {
+    min-height: clamp(80px, 15vw, 120px);
+    padding: clamp(16px, 3vw, 20px) clamp(20px, 4vw, 24px);
+    gap: clamp(16px, 3vw, 24px);
   }
 
-  .sidebar::after {
-    display: none;
+  .tileIcon {
+    width: clamp(48px, 10vw, 64px);
+    height: clamp(48px, 10vw, 64px);
   }
 
-  .sidebarLinks {
-    flex-direction: row;
-    margin-left: 0;
-  }
-
-  .primaryNav {
-    flex-wrap: wrap;
-    gap: 18px;
+  .tileIcon svg {
+    width: clamp(20px, 4vw, 28px);
+    height: clamp(20px, 4vw, 28px);
   }
 }
 

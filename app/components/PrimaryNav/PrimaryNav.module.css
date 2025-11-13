@@ -22,10 +22,27 @@
   color: #ffffff;
 }
 
+@media (max-width: 768px) {
+  .navList {
+    gap: clamp(16px, 4vw, 24px);
+    font-size: clamp(0.75rem, 0.5vw + 0.7rem, 0.9rem);
+    flex-wrap: wrap;
+  }
+}
+
 .navLink {
   position: relative;
   color: inherit;
   padding-bottom: 6px;
+}
+
+@media (max-width: 768px) {
+  .navLink {
+    padding: 8px 4px 6px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 .highlight {
