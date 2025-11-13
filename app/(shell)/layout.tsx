@@ -171,31 +171,14 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   // Initialize state after mount to avoid SSR/client mismatch
   // Simplified transition state - use single key-based system
   const [transitionKey, setTransitionKey] = useState(pathname);
-  // Store content per key - ensures correct content for each key
-  const contentMapRef = useRef<Map<string, ReactNode>>(new Map());
   const [isMounted, setIsMounted] = useState(false);
-  // Track the key that's currently being displayed (for exit animation)
-  const [displayKey, setDisplayKey] = useState(pathname);
 
   useEffect(() => {
     setIsMounted(true);
-    contentMapRef.current.set(pathname, contentNode);
-    setDisplayKey(pathname);
   }, []);
 
   const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
-
-  const isTransitioning = pathname !== transitionKey;
-
-  // Handle exit complete - update displayKey to new key
-  const handleExitComplete = () => {
-    setDisplayKey(transitionKey);
-    // Ensure new content is in map for the new key
-    if (contentNode) {
-      contentMapRef.current.set(pathname, contentNode);
-    }
-  };
 
   // Update transition key when pathname changes (triggers AnimatePresence)
   useEffect(() => {
@@ -211,28 +194,13 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       if (newIndex >= 0 && currentIndex >= 0) {
         directionRef.current = newIndex > currentIndex ? 1 : -1;
       }
-      // Ensure old content is stored for current displayKey before changing
-      contentMapRef.current.set(
-        displayKey,
-        contentMapRef.current.get(displayKey) ?? contentNode
-      );
-      // Store new content in map for new pathname
-      contentMapRef.current.set(pathname, contentNode);
-      // Update transitionKey - this triggers AnimatePresence to see key change
-      // displayKey stays as old key, so old content is shown during exit
-      // After exit completes, handleExitComplete updates displayKey to new key
+      // Update transitionKey - this triggers AnimatePresence to show new content with enter animation
       setTransitionKey(pathname);
     }
-  }, [pathname, transitionKey, isMounted, contentNode, displayKey]);
-
-  // Keep content map updated
-  useEffect(() => {
-    if (isMounted) {
-      contentMapRef.current.set(pathname, contentNode);
-    }
-  }, [pathname, contentNode, isMounted]);
+  }, [pathname, transitionKey, isMounted]);
 
   // Safety timeout to clear stuck transition state
+  const isTransitioning = pathname !== transitionKey;
   useEffect(() => {
     if (isTransitioning) {
       // If transition key doesn't match pathname after timeout, force sync
@@ -250,7 +218,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     }
   }, [isTransitioning, transitionDuration, transitionKey, pathname]);
 
-  // Single set of variants for both exit and enter
+  // Variants for enter animation only (no exit animation)
   const pageVariants = {
     initial: (dir: number) => ({
       opacity: 0,
@@ -267,16 +235,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         type: "tween" as const,
       },
     },
-    exit: (dir: number) => ({
-      opacity: 0,
-      x: dir * -150,
-      filter: "brightness(0.6)",
-      transition: {
-        duration: transitionDuration,
-        ease: easing,
-        type: "tween" as const,
-      },
-    }),
+    // No exit animation - old content disappears immediately
   };
 
   return (
@@ -318,7 +277,6 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
               mode="wait"
               custom={directionRef.current}
               initial={false}
-              onExitComplete={handleExitComplete}
             >
               <motion.div
                 key={transitionKey}
@@ -326,14 +284,10 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 variants={pageVariants}
                 initial="initial"
                 animate="animate"
-                exit="exit"
                 className={styles.transitionLayer}
               >
-                {/* Get content from map based on displayKey */}
-                {/* When transitionKey changes, AnimatePresence triggers exit for old key */}
-                {/* displayKey stays as old key during exit, so old content is shown */}
-                {/* After exit completes, handleExitComplete updates displayKey to new key */}
-                {contentMapRef.current.get(displayKey) ?? contentNode}
+                {/* Show content directly - no need to preserve old content since there's no exit animation */}
+                {contentNode}
               </motion.div>
             </AnimatePresence>
           </TransitionErrorBoundary>
