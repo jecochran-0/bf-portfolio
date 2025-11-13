@@ -19,7 +19,10 @@ import {
   useState,
 } from "react";
 
-import { LeftSidebar, EnvelopeIcon } from "../components/LeftSidebar/LeftSidebar";
+import {
+  LeftSidebar,
+  EnvelopeIcon,
+} from "../components/LeftSidebar/LeftSidebar";
 import { PrimaryNav } from "../components/PrimaryNav/PrimaryNav";
 import { TransitionErrorBoundary } from "../components/TransitionErrorBoundary";
 import { PRIMARY_NAV_ITEMS } from "../config/navigation";
@@ -50,7 +53,9 @@ const SOCIAL_LINKS = [
   {
     href: "https://x.com/Jake_Snake0",
     label: "X",
-    icon: <Image src="/assets/x-icon.png" alt="X icon" width={34} height={34} />,
+    icon: (
+      <Image src="/assets/x-icon.png" alt="X icon" width={34} height={34} />
+    ),
     external: true,
   },
   {
@@ -84,7 +89,10 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     if (stored) {
       setBackgroundSrc(stored);
     } else {
-      const selected = BACKGROUND_SOURCES[Math.floor(Math.random() * BACKGROUND_SOURCES.length)];
+      const selected =
+        BACKGROUND_SOURCES[
+          Math.floor(Math.random() * BACKGROUND_SOURCES.length)
+        ];
       sessionStorage.setItem(sessionKey, selected);
       setBackgroundSrc(selected);
     }
@@ -102,7 +110,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
 
   const childArray = Children.toArray(children);
 
-  const hasDataShellContent = (child: unknown): child is ReactElement<Record<string, unknown>> => {
+  const hasDataShellContent = (
+    child: unknown
+  ): child is ReactElement<Record<string, unknown>> => {
     if (!isValidElement(child)) return false;
     const props = child.props as Record<string, unknown> | null | undefined;
     if (typeof props !== "object" || props === null) return false;
@@ -110,9 +120,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   };
 
   const contentNode =
-     childArray.find(hasDataShellContent) ??
-     (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
- 
+    childArray.find(hasDataShellContent) ??
+    (isValidElement(children) ? (children as ReactElement) : <>{children}</>);
+
   const memoContent = useMemo(
     () => ({ path: pathname, node: contentNode }),
     [pathname, contentNode]
@@ -124,23 +134,25 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     );
     return match >= 0 ? match : 0;
   }, [pathname]);
- 
-   const previousIndexRef = useRef(currentIndex);
-   const directionRef = useRef<number>(1);
- 
-   useEffect(() => {
-     const previous = previousIndexRef.current;
-     if (previous !== currentIndex) {
+
+  const previousIndexRef = useRef(currentIndex);
+  const directionRef = useRef<number>(1);
+
+  useEffect(() => {
+    const previous = previousIndexRef.current;
+    if (previous !== currentIndex) {
       directionRef.current = currentIndex > previous ? 1 : -1;
-       previousIndexRef.current = currentIndex;
-     }
-   }, [currentIndex]);
- 
-   const targetBackgroundX = useMemo(() => {
-     const pathMatch = PRIMARY_NAV_ITEMS.find((item) => pathname.startsWith(item.href));
-     const key = pathMatch?.href ?? "/home";
-     return TAB_CAMERA_POSITIONS[key] ?? 0;
-   }, [pathname]);
+      previousIndexRef.current = currentIndex;
+    }
+  }, [currentIndex]);
+
+  const targetBackgroundX = useMemo(() => {
+    const pathMatch = PRIMARY_NAV_ITEMS.find((item) =>
+      pathname.startsWith(item.href)
+    );
+    const key = pathMatch?.href ?? "/home";
+    return TAB_CAMERA_POSITIONS[key] ?? 0;
+  }, [pathname]);
 
   const backgroundSpring = useSpring(targetBackgroundX, {
     stiffness: 120,
@@ -156,18 +168,34 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     backgroundSpring.set(targetBackgroundX);
   }, [targetBackgroundX, prefersReducedMotion, backgroundSpring]);
 
-
   // Initialize state after mount to avoid SSR/client mismatch
   // Simplified transition state - use single key-based system
   const [transitionKey, setTransitionKey] = useState(pathname);
+  // Store content per key - ensures correct content for each key
+  const contentMapRef = useRef<Map<string, ReactNode>>(new Map());
   const [isMounted, setIsMounted] = useState(false);
-  
+  // Track the key that's currently being displayed (for exit animation)
+  const [displayKey, setDisplayKey] = useState(pathname);
+
   useEffect(() => {
     setIsMounted(true);
+    contentMapRef.current.set(pathname, contentNode);
+    setDisplayKey(pathname);
   }, []);
 
   const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
+
+  const isTransitioning = pathname !== transitionKey;
+
+  // Handle exit complete - update displayKey to new key
+  const handleExitComplete = () => {
+    setDisplayKey(transitionKey);
+    // Ensure new content is in map for the new key
+    if (contentNode) {
+      contentMapRef.current.set(pathname, contentNode);
+    }
+  };
 
   // Update transition key when pathname changes (triggers AnimatePresence)
   useEffect(() => {
@@ -183,20 +211,38 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       if (newIndex >= 0 && currentIndex >= 0) {
         directionRef.current = newIndex > currentIndex ? 1 : -1;
       }
+      // Ensure old content is stored for current displayKey before changing
+      contentMapRef.current.set(
+        displayKey,
+        contentMapRef.current.get(displayKey) ?? contentNode
+      );
+      // Store new content in map for new pathname
+      contentMapRef.current.set(pathname, contentNode);
+      // Update transitionKey - this triggers AnimatePresence to see key change
+      // displayKey stays as old key, so old content is shown during exit
+      // After exit completes, handleExitComplete updates displayKey to new key
       setTransitionKey(pathname);
     }
-  }, [pathname, transitionKey, isMounted]);
+  }, [pathname, transitionKey, isMounted, contentNode, displayKey]);
 
-  const isTransitioning = pathname !== transitionKey;
+  // Keep content map updated
+  useEffect(() => {
+    if (isMounted) {
+      contentMapRef.current.set(pathname, contentNode);
+    }
+  }, [pathname, contentNode, isMounted]);
 
   // Safety timeout to clear stuck transition state
   useEffect(() => {
     if (isTransitioning) {
       // If transition key doesn't match pathname after timeout, force sync
-      const safetyTimeout = (transitionDuration * 1000) * 2 + 500;
+      const safetyTimeout = transitionDuration * 1000 * 2 + 500;
       const timeout = setTimeout(() => {
         if (transitionKey !== pathname) {
-          console.warn("Transition timeout: forcing sync", { transitionKey, pathname });
+          console.warn("Transition timeout: forcing sync", {
+            transitionKey,
+            pathname,
+          });
           setTransitionKey(pathname);
         }
       }, safetyTimeout);
@@ -272,6 +318,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
               mode="wait"
               custom={directionRef.current}
               initial={false}
+              onExitComplete={handleExitComplete}
             >
               <motion.div
                 key={transitionKey}
@@ -282,7 +329,11 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                 exit="exit"
                 className={styles.transitionLayer}
               >
-                {contentNode}
+                {/* Get content from map based on displayKey */}
+                {/* When transitionKey changes, AnimatePresence triggers exit for old key */}
+                {/* displayKey stays as old key during exit, so old content is shown */}
+                {/* After exit completes, handleExitComplete updates displayKey to new key */}
+                {contentMapRef.current.get(displayKey) ?? contentNode}
               </motion.div>
             </AnimatePresence>
           </TransitionErrorBoundary>
@@ -291,4 +342,3 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     </div>
   );
 }
-
