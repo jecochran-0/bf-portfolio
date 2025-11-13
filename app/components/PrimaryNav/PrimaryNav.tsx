@@ -15,12 +15,11 @@ export type PrimaryNavItem = {
 interface PrimaryNavProps {
   items: PrimaryNavItem[];
   activeHref?: string;
-  isTransitioning?: boolean;
 }
 
 const RETURN_DELAY = 160;
 
-export function PrimaryNav({ items, activeHref, isTransitioning = false }: PrimaryNavProps) {
+export function PrimaryNav({ items, activeHref }: PrimaryNavProps) {
   const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -106,14 +105,12 @@ export function PrimaryNav({ items, activeHref, isTransitioning = false }: Prima
   };
 
   const handleNavClick = (href: string, event: React.MouseEvent<HTMLAnchorElement>) => {
-    // Prevent navigation during transitions to avoid state corruption
-    if (isTransitioning) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
+    // Don't block navigation - let Next.js router handle it naturally
+    // The transition system will handle visual transitions
+    // If user clicks same page, Next.js router will handle it (no-op)
+    
     // Only track navigation to tabs other than home
-    if (href !== "/home") {
+    if (href !== "/home" && pathname !== href) {
       incrementProgress();
       window.dispatchEvent(new CustomEvent("progressUpdated"));
     }

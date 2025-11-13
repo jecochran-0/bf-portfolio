@@ -209,8 +209,10 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     setTransitionState((prev) => {
       // Only update if pathname actually changed
       if (pathname === prev.current.path) {
-        // If pathname matches but we're still transitioning, clear stuck state
+        // If pathname matches but we're still transitioning, clear stuck state immediately
+        // This ensures navigation can proceed even if transition is stuck
         if (prev.exiting || prev.entering) {
+          enteringPathRef.current = null;
           return {
             ...prev,
             current: { path: pathname, node: contentNode },
@@ -225,6 +227,8 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         };
       }
 
+      // Pathname changed - start new transition
+      // Cancel any existing transition by clearing it first
       const visible = prev.entering ?? prev.exiting ?? prev.current;
       enteringPathRef.current = pathname;
 
@@ -253,7 +257,12 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         setTransitionState((prev) => {
           // Only clear if still transitioning (stuck state)
           if (prev.exiting || prev.entering) {
-            console.warn("Transition timeout: clearing stuck transition state");
+            console.warn("Transition timeout: clearing stuck transition state", {
+              exiting: prev.exiting?.path,
+              entering: prev.entering?.path,
+              current: prev.current.path,
+            });
+            enteringPathRef.current = null;
             return {
               ...prev,
               exiting: null,
@@ -349,7 +358,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         </div>
 
         <div className={styles.navFrame}>
-          <PrimaryNav items={PRIMARY_NAV_ITEMS} activeHref={pathname} isTransitioning={isTransitioning} />
+          <PrimaryNav items={PRIMARY_NAV_ITEMS} activeHref={pathname} />
         </div>
 
         <div className={styles.stage}>
@@ -383,8 +392,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                     if (definition === "animate") {
                       // Fix: Use prev.entering and ref to ensure we clear the correct transition
                       setTransitionState((prev) => {
-                        // Only clear if this is still the current entering path
-                        if (prev.entering && prev.entering.path === enteringPathRef.current) {
+                        // Always clear entering state when animation completes
+                        // This ensures transitions don't get stuck
+                        if (prev.entering) {
                           enteringPathRef.current = null;
                           return { ...prev, entering: null };
                         }
