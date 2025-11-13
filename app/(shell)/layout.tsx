@@ -21,6 +21,7 @@ import {
 
 import { LeftSidebar, EnvelopeIcon } from "../components/LeftSidebar/LeftSidebar";
 import { PrimaryNav } from "../components/PrimaryNav/PrimaryNav";
+import { TransitionErrorBoundary } from "../components/TransitionErrorBoundary";
 import { PRIMARY_NAV_ITEMS } from "../config/navigation";
 
 import styles from "./shell.module.css";
@@ -174,15 +175,34 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
  
   const animationDurationMs = pageTransition.duration * 1000;
 
+  // Initialize state after mount to avoid SSR/client mismatch
   const [transitionState, setTransitionState] = useState<TransitionState>(() => ({
-    current: memoContent,
+    current: { path: pathname, node: null },
     exiting: null,
     entering: null,
     direction: 1,
   }));
 
+  // Initialize with actual content after mount (client-side only)
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+    setTransitionState({
+      current: { path: pathname, node: contentNode },
+      exiting: null,
+      entering: null,
+      direction: 1,
+    });
+  }, []); // Only run once on mount
+
+  const transitionDuration = prefersReducedMotion ? 0 : 0.7;
+  const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
+
   // Only trigger transitions on pathname changes, not on contentNode re-renders
   useEffect(() => {
+    // Skip if not mounted yet (SSR)
+    if (!isMounted) return;
+
     setTransitionState((prev) => {
       // Only update if pathname actually changed
       if (pathname === prev.current.path) {
@@ -202,12 +222,48 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         direction: directionRef.current,
       };
     });
-  }, [pathname, contentNode]);
+  }, [pathname, contentNode, isMounted]);
 
   const isTransitioning = Boolean(transitionState.exiting || transitionState.entering);
 
-  const transitionDuration = prefersReducedMotion ? 0 : 0.7;
-  const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
+  // Safety timeout to clear stuck transition state
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    if (isTransitioning) {
+      // Clear any existing timeout
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+      // Set safety timeout: transition duration + buffer (2x duration for safety)
+      const safetyTimeout = (transitionDuration * 1000) * 2 + 500;
+      transitionTimeoutRef.current = setTimeout(() => {
+        setTransitionState((prev) => {
+          // Only clear if still transitioning (stuck state)
+          if (prev.exiting || prev.entering) {
+            console.warn("Transition timeout: clearing stuck transition state");
+            return {
+              ...prev,
+              exiting: null,
+              entering: null,
+            };
+          }
+          return prev;
+        });
+        transitionTimeoutRef.current = null;
+      }, safetyTimeout);
+    } else {
+      // Clear timeout if not transitioning
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+        transitionTimeoutRef.current = null;
+      }
+    }
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, [isTransitioning, transitionDuration]);
 
   const exitVariants = {
     present: { opacity: 1, x: 0, filter: "brightness(1)" },
@@ -237,6 +293,11 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
     setTransitionState((prev) => {
       if (!prev.exiting) {
         return prev;
+      }
+      // Clear safety timeout when exit completes successfully
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+        transitionTimeoutRef.current = null;
       }
       return {
         ...prev,
@@ -282,50 +343,53 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
         </div>
 
         <div className={styles.stage}>
-          <AnimatePresence
-            mode="wait"
-            custom={transitionState.direction}
-            onExitComplete={handleExitComplete}
-          >
-            {transitionState.exiting ? (
-              <motion.div
-                key={`exit-${transitionState.exiting.path}`}
-                custom={transitionState.direction}
-                variants={exitVariants}
-                initial="present"
-                animate="present"
-                exit="exit"
-                className={styles.transitionLayer}
-              >
-                {transitionState.exiting.node}
-              </motion.div>
-            ) : transitionState.entering ? (
-              <motion.div
-                key={`enter-${transitionState.entering.path}`}
-                custom={transitionState.direction}
-                variants={enterVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                onAnimationComplete={(definition) => {
-                  if (definition === "animate") {
-                    setTransitionState((prev) =>
-                      prev.entering && prev.entering.path === transitionState.entering?.path
-                        ? { ...prev, entering: null }
-                        : prev
-                    );
-                  }
-                }}
-                className={styles.transitionLayer}
-              >
-                {transitionState.entering.node}
-              </motion.div>
-            ) : (
-              <div key={`static-${transitionState.current.path}`} className={styles.transitionLayer}>
-                {transitionState.current.node}
-              </div>
-            )}
-          </AnimatePresence>
+          <TransitionErrorBoundary>
+            <AnimatePresence
+              mode="wait"
+              custom={transitionState.direction}
+              onExitComplete={handleExitComplete}
+            >
+              {transitionState.exiting ? (
+                <motion.div
+                  key={`exit-${transitionState.exiting.path}`}
+                  custom={transitionState.direction}
+                  variants={exitVariants}
+                  initial="present"
+                  animate="present"
+                  exit="exit"
+                  className={styles.transitionLayer}
+                >
+                  {transitionState.exiting.node}
+                </motion.div>
+              ) : transitionState.entering ? (
+                <motion.div
+                  key={`enter-${transitionState.entering.path}`}
+                  custom={transitionState.direction}
+                  variants={enterVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  onAnimationComplete={(definition) => {
+                    if (definition === "animate") {
+                      // Fix: Use prev.entering instead of closure value to avoid stale closure
+                      setTransitionState((prev) =>
+                        prev.entering
+                          ? { ...prev, entering: null }
+                          : prev
+                      );
+                    }
+                  }}
+                  className={styles.transitionLayer}
+                >
+                  {transitionState.entering.node}
+                </motion.div>
+              ) : transitionState.current.node ? (
+                <div key={`static-${transitionState.current.path}`} className={styles.transitionLayer}>
+                  {transitionState.current.node}
+                </div>
+              ) : null}
+            </AnimatePresence>
+          </TransitionErrorBoundary>
         </div>
       </div>
     </div>
