@@ -75,7 +75,7 @@ export function ProjectRow({ projects, cardClassName, layout = "scroll" }: Proje
     }
 
     updateScrollState();
-    const scrollListenerOptions = { passive: true } as const;
+    const scrollListenerOptions: AddEventListenerOptions = { passive: true };
     rowEl.addEventListener("scroll", updateScrollState, scrollListenerOptions);
     window.addEventListener("resize", updateScrollState);
 
@@ -97,7 +97,7 @@ export function ProjectRow({ projects, cardClassName, layout = "scroll" }: Proje
     };
   }, [layout, updateScrollState]);
 
-  const handleWheel: ReactWheelEvent<HTMLDivElement> = (event) => {
+  const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
     if (layout !== "scroll") {
       return;
     }
@@ -118,7 +118,7 @@ export function ProjectRow({ projects, cardClassName, layout = "scroll" }: Proje
     }
   };
 
-  const handlePointerDown: ReactPointerEvent<HTMLDivElement> = (event) => {
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (layout !== "scroll") {
       return;
     }
@@ -144,7 +144,7 @@ export function ProjectRow({ projects, cardClassName, layout = "scroll" }: Proje
     rowEl.setPointerCapture(event.pointerId);
   };
 
-  const handlePointerMove: ReactPointerEvent<HTMLDivElement> = (event) => {
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (layout !== "scroll") {
       return;
     }
@@ -161,7 +161,7 @@ export function ProjectRow({ projects, cardClassName, layout = "scroll" }: Proje
     requestAnimationFrame(updateScrollState);
   };
 
-  const finishDrag: ReactPointerEvent<HTMLDivElement> = (event) => {
+  const finishDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (layout !== "scroll") {
       return;
     }
