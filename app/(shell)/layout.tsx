@@ -198,8 +198,9 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const transitionDuration = prefersReducedMotion ? 0 : 0.7;
   const easing: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 
-  // Track entering path to ensure animation complete callback works
+  // Track entering path and node to ensure animation complete callback works
   const enteringPathRef = useRef<string | null>(null);
+  const enteringNodeRef = useRef<ReactNode | null>(null);
 
   // Only trigger transitions on pathname changes, not on contentNode re-renders
   useEffect(() => {
@@ -228,14 +229,17 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       }
 
       // Pathname changed - start new transition
-      // Cancel any existing transition by clearing it first
+      // With mode="wait", set exiting first, entering will be set after exit completes
       const visible = prev.entering ?? prev.exiting ?? prev.current;
       enteringPathRef.current = pathname;
+      enteringNodeRef.current = contentNode; // Store the new content node
 
+      // Store the target pathname for after exit completes
+      // Only set exiting, entering will be set in handleExitComplete
       return {
         current: { path: pathname, node: contentNode },
         exiting: visible,
-        entering: { path: pathname, node: contentNode },
+        entering: null, // Will be set after exit completes
         direction: directionRef.current,
       };
     });
@@ -302,12 +306,18 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       opacity: 0,
       x: dir * 150,
       filter: "brightness(1.08)",
+      transition: { duration: 0 }, // Immediate transition to initial state
     }),
     animate: {
       opacity: 1,
       x: 0,
       filter: "brightness(1)",
-      transition: { duration: transitionDuration, ease: easing },
+      transition: { 
+        duration: transitionDuration, 
+        ease: easing,
+        // Ensure animation plays in production
+        type: "tween",
+      },
     },
   } as const;
 
@@ -320,6 +330,18 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       if (transitionTimeoutRef.current) {
         clearTimeout(transitionTimeoutRef.current);
         transitionTimeoutRef.current = null;
+      }
+      // After exit completes, set entering state if we have a pending pathname change
+      // This ensures the enter animation plays properly in production
+      const pendingPath = enteringPathRef.current;
+      const pendingNode = enteringNodeRef.current;
+      if (pendingPath && pendingNode && pendingPath !== prev.current.path) {
+        // Use the stored node for the pending path
+        return {
+          ...prev,
+          exiting: null,
+          entering: { path: pendingPath, node: pendingNode },
+        };
       }
       return {
         ...prev,
@@ -367,6 +389,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
               mode="wait"
               custom={transitionState.direction}
               onExitComplete={handleExitComplete}
+              initial={false}
             >
               {transitionState.exiting ? (
                 <motion.div
@@ -388,6 +411,16 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                   initial="initial"
                   animate="animate"
                   exit="exit"
+                  onAnimationStart={(definition) => {
+                    // Ensure animation starts in production
+                    if (definition === "animate") {
+                      // Force a reflow to ensure animation plays
+                      const element = document.querySelector(`[data-transition-key="enter-${transitionState.entering?.path}"]`);
+                      if (element) {
+                        (element as HTMLElement).offsetHeight; // Force reflow
+                      }
+                    }
+                  }}
                   onAnimationComplete={(definition) => {
                     if (definition === "animate") {
                       // Fix: Use prev.entering and ref to ensure we clear the correct transition
@@ -396,12 +429,14 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
                         // This ensures transitions don't get stuck
                         if (prev.entering) {
                           enteringPathRef.current = null;
+                          enteringNodeRef.current = null;
                           return { ...prev, entering: null };
                         }
                         return prev;
                       });
                     }
                   }}
+                  data-transition-key={`enter-${transitionState.entering.path}`}
                   className={styles.transitionLayer}
                 >
                   {transitionState.entering.node}
