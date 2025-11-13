@@ -50,6 +50,26 @@
   font-weight: 300;
 }
 
+.disclaimer {
+  background: rgba(255, 193, 7, 0.1);
+  border-left: 3px solid rgba(255, 193, 7, 0.6);
+  padding: clamp(16px, 2vw, 20px);
+  border-radius: 4px;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.disclaimerText {
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.disclaimerText strong {
+  color: rgba(255, 193, 7, 0.9);
+  font-weight: 600;
+}
+
 .section {
   display: flex;
   flex-direction: column;

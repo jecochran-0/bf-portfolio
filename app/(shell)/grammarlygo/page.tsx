@@ -13,6 +13,12 @@ export default function GrammarlyGoPage() {
             </p>
           </header>
 
+          <div className={styles.disclaimer}>
+            <p className={styles.disclaimerText}>
+              <strong>Disclaimer:</strong> The initial numbers presented in this case study are fabricated for demonstration purposes to illustrate the research methodology and analytical framework.
+            </p>
+          </div>
+
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>Background Context</h2>
             <p className={styles.bodyText}>
