@@ -12,6 +12,19 @@
   animation: fadeIn 0.8s ease-in-out;
 }
 
+@media (max-width: 768px) {
+  .page {
+    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height for mobile */
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -91,6 +104,7 @@
   .menu {
     justify-content: center;
     min-height: calc(100vh - 120px);
+    padding-bottom: clamp(60px, 12vw, 100px); /* Add more space at bottom */
   }
 }
 
@@ -197,15 +211,6 @@
   }
 
   .footer {
-    position: absolute;
-    right: clamp(16px, 4vw, 24px);
-    bottom: clamp(16px, 4vw, 24px);
-    margin-top: 0;
-    flex-direction: column;
-    gap: clamp(16px, 3vw, 20px);
-  }
-
-  .social {
-    transform: scale(1.1);
+    display: none; /* Hide icons on mobile */
   }
 }

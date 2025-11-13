@@ -13,10 +13,8 @@
   .wrapper {
     flex-direction: column;
     padding: clamp(16px, 4vw, 24px);
-    padding-bottom: clamp(64px, 12vw, 96px);
+    padding-bottom: clamp(32px, 6vw, 48px);
     gap: clamp(16px, 3vw, 24px);
-    height: 100vh;
-    overflow: hidden;
   }
 }
 
@@ -123,9 +121,7 @@
 @media (max-width: 768px) {
   .stage {
     min-height: auto;
-    padding-bottom: clamp(64px, 12vw, 96px);
-    flex: 1 1 auto;
-    overflow: hidden;
+    padding-bottom: clamp(32px, 6vw, 48px);
   }
 }
 

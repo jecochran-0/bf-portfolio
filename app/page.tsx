@@ -17,6 +17,18 @@ export default function Home() {
   useEffect(() => {
     // Reset UX tip progress when welcome screen loads
     resetProgress();
+    
+    // Prevent scrolling on mobile
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      
+      return () => {
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
+      };
+    }
   }, []);
 
   useEffect(() => {
