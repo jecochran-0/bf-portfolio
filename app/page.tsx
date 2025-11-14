@@ -54,6 +54,25 @@ export default function Home() {
 
   const handleEnterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    
+    // Select and store background BEFORE navigation to prevent visible change during fade-in
+    const sessionKey = "portfolio-bg-selection";
+    const BACKGROUND_SOURCES = [
+      "/assets/Portfolio-Background2.png",
+      "/assets/Portfolio-Background3.png",
+      "/assets/Portfolio-Background4.png",
+      "/assets/Portfolio-Background5.png",
+    ];
+    
+    // Only select if not already stored (preserves selection across page refreshes)
+    if (!sessionStorage.getItem(sessionKey)) {
+      const selected =
+        BACKGROUND_SOURCES[
+          Math.floor(Math.random() * BACKGROUND_SOURCES.length)
+        ];
+      sessionStorage.setItem(sessionKey, selected);
+    }
+    
     setIsFadingOut(true);
     setTimeout(() => {
       router.push("/home");
