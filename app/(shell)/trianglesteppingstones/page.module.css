@@ -1,0 +1,323 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  padding-top: clamp(18px, 3vw, 36px);
+  max-width: 1400px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 20px);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.category {
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3vw, 3.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 300;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.metaCard {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.5vw, 8px);
+}
+
+.metaLabel {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.metaValue {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.metaLink {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.metaLink:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.9);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.5vw, 32px);
+}
+
+.sectionTitle {
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.subsection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  margin-top: clamp(16px, 2vw, 24px);
+}
+
+.subsectionTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.bodyText {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+}
+
+.list li {
+  position: relative;
+  padding-left: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.userGroupCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+  margin-bottom: clamp(20px, 2.5vw, 32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.userGroupHeader {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 20px);
+  flex-wrap: wrap;
+}
+
+.userGroupEmoji {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+.userGroupTitle {
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  flex: 1;
+}
+
+.userGroupDescription {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.improvementCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.improvementNumber {
+  font-size: clamp(1.2rem, 1.6vw, 1.8rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.improvementTitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.improvementText {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(24px, 3vw, 36px) 0;
+}
+
+.statCard {
+  background: rgba(0, 0, 0, 0.49);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.statValue {
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: clamp(20px, 2.5vw, 32px) auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.imageContainer img,
+.image {
+  width: 100%;
+  max-width: 1400px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.imageCaption {
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: clamp(8px, 1vw, 12px);
+  font-style: italic;
+}
+
+.beforeAfterGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+  margin: clamp(24px, 3vw, 36px) 0;
+  max-width: 1400px;
+}
+
+.beforeAfterCard {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 18px);
+}
+
+.beforeAfterCard .imageContainer {
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.beforeAfterLabel {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 1200px) {
+  .metaGrid,
+  .statsGrid,
+  .beforeAfterGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .metaGrid,
+  .statsGrid,
+  .beforeAfterGrid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -19,6 +19,14 @@ const uxProjects = [
     imageAlt: "GrammarlyGo case study screens",
     href: "/grammarlygo",
   },
+  {
+    title: "Triangle Stepping Stones",
+    subtitle: "UX Design & Development",
+    meta: "User Research · Web Design · CMS Development",
+    imageSrc: "/tss/tss-thumbnail.png",
+    imageAlt: "Triangle Stepping Stones website redesign",
+    href: "/trianglesteppingstones",
+  },
 ];
 
 const devProjects = [

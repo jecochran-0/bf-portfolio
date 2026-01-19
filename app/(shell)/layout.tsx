@@ -19,6 +19,7 @@ import {
   useState,
 } from "react";
 
+import { FaImages } from "react-icons/fa";
 import {
   LeftSidebar,
   EnvelopeIcon,
@@ -82,6 +83,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const [backgroundSrc, setBackgroundSrc] = useState(BACKGROUND_SOURCES[0]);
+  const [backgroundKey, setBackgroundKey] = useState(0);
 
   useEffect(() => {
     const sessionKey = "portfolio-bg-selection";
@@ -97,6 +99,22 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
       setBackgroundSrc(selected);
     }
   }, []);
+
+  const handleBackgroundChange = () => {
+    const sessionKey = "portfolio-bg-selection";
+    // Get a random background that's different from the current one
+    const currentIndex = BACKGROUND_SOURCES.indexOf(backgroundSrc);
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * BACKGROUND_SOURCES.length);
+    } while (newIndex === currentIndex && BACKGROUND_SOURCES.length > 1);
+    
+    const selected = BACKGROUND_SOURCES[newIndex];
+    sessionStorage.setItem(sessionKey, selected);
+    // Update key to trigger fade transition
+    setBackgroundKey((prev) => prev + 1);
+    setBackgroundSrc(selected);
+  };
 
   useEffect(() => {
     // Remove initial load fade-in after animation completes
@@ -256,13 +274,27 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
               scale: prefersReducedMotion ? 1 : 1.25,
             }}
           >
-            <Image
-              src={backgroundSrc}
-              alt="Battlefield ambience"
-              fill
-              priority
-              className={styles.backgroundImage}
-            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={backgroundKey}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: prefersReducedMotion ? 0 : 0.6,
+                  ease: [0.22, 0.61, 0.36, 1],
+                }}
+                style={{ position: "absolute", inset: 0 }}
+              >
+                <Image
+                  src={backgroundSrc}
+                  alt="Battlefield ambience"
+                  fill
+                  priority
+                  className={styles.backgroundImage}
+                />
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
           <div className={styles.backgroundScrim} />
         </div>
@@ -292,6 +324,14 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
             </AnimatePresence>
           </TransitionErrorBoundary>
         </div>
+
+        <button
+          onClick={handleBackgroundChange}
+          aria-label="Change background"
+          className={styles.backgroundButton}
+        >
+          <FaImages />
+        </button>
       </div>
     </div>
   );

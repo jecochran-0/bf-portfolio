@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   eslint: {
@@ -9,12 +10,12 @@ const nextConfig: NextConfig = {
     // Don't fail build on type errors (but still show them)
     ignoreBuildErrors: false,
   },
-  // Ensure clean builds
-  swcMinify: true,
   // Ensure CSS is loaded before page becomes interactive
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["warn", "error"] } : false,
   },
+  // Set workspace root to silence lockfile warning
+  outputFileTracingRoot: path.join(__dirname),
 };
 
 export default nextConfig;
