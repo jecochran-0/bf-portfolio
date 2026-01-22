@@ -88,6 +88,7 @@ export default function HomeScreen() {
                     src="/assets/Selfie.jpeg"
                     alt="Jake smiling at desk"
                     fill
+                    loading="lazy"
                     className={styles.cardMedia}
                     sizes="(max-width: 1400px) 40vw, 420px"
                   />

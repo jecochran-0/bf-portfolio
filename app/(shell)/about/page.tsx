@@ -267,6 +267,7 @@ export default function AboutPage() {
                   src={activeTab.photo}
                   alt={`${activeTab.heading} preview`}
                   fill
+                  loading="lazy"
                   sizes="(max-width: 960px) 80vw, 360px"
                   style={{
                     objectFit: "cover",

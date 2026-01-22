@@ -1,0 +1,1578 @@
+/* ============================================
+   MBTA mTicket Redesign - Styles
+   Closely matching actual MBTA app styling
+   ============================================ */
+
+/* Design Tokens - Matching MBTA Brand */
+:root {
+  /* MBTA Brand Colors - exact match */
+  --color-primary: #8B2279;
+  --color-primary-dark: #5C1751;
+  --color-primary-light: #A52D91;
+  --color-accent: #FFC72C;
+  --color-accent-hover: #E6B326;
+
+  /* Secondary purple for tabs/headers */
+  --color-secondary: #4A1942;
+
+  /* Status Colors */
+  --color-success: #28A745;
+  --color-success-light: #D4EDDA;
+  --color-warning: #FFC72C;
+  --color-warning-light: #FFF3CD;
+  --color-error: #DC3545;
+  --color-error-light: #F8D7DA;
+  --color-info-blue: #165C96;
+
+  /* Neutrals */
+  --color-white: #FFFFFF;
+  --color-gray-50: #F8F9FA;
+  --color-gray-100: #F1F3F5;
+  --color-gray-200: #E9ECEF;
+  --color-gray-300: #DEE2E6;
+  --color-gray-400: #CED4DA;
+  --color-gray-500: #ADB5BD;
+  --color-gray-600: #6C757D;
+  --color-gray-700: #495057;
+  --color-gray-800: #343A40;
+  --color-gray-900: #212529;
+
+  /* Typography - System fonts */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border Radius - MBTA uses rounded corners */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+
+  /* Layout */
+  --mobile-width: 390px;
+  --header-height: 60px;
+  --bottom-nav-height: 80px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-primary);
+  color: var(--color-gray-900);
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: var(--mobile-width);
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--bottom-nav-height);
+}
+
+.hidden { display: none !important; }
+
+/* ============================================
+   Header - MBTA Style
+   ============================================ */
+.header {
+  background: var(--color-primary);
+  padding: var(--space-md) var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-height);
+}
+
+.header__left,
+.header__right {
+  min-width: 60px;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header__back {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  padding: var(--space-sm);
+  margin-left: -8px;
+  font-family: var(--font-family);
+}
+
+.header__back svg {
+  width: 24px;
+  height: 24px;
+}
+
+.header__title {
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+}
+
+.header__logo {
+  width: 44px;
+  height: 44px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  border: 3px solid var(--color-white);
+}
+
+.header__action {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  padding: var(--space-sm);
+  cursor: pointer;
+}
+
+/* ============================================
+   Main Action Cards - MBTA Style
+   ============================================ */
+.action-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.action-card:active {
+  transform: scale(0.98);
+}
+
+.action-card__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.action-card__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-primary);
+}
+
+.action-card__text {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.action-card__arrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 300;
+}
+
+/* Favorite Route Card - Purple background */
+.favorite-route-card {
+  background: var(--color-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+}
+
+.favorite-route-card__star {
+  color: #7CB342;
+  font-size: 24px;
+}
+
+.favorite-route-card__content {
+  color: var(--color-white);
+}
+
+.favorite-route-card__origin {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.favorite-route-card__dest {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.favorite-route-card__dest::before {
+  content: '→';
+  color: #7CB342;
+}
+
+/* ============================================
+   Ticket Card - Matching MBTA exactly
+   ============================================ */
+.ticket-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.ticket-card__inner {
+  padding: var(--space-lg);
+  position: relative;
+}
+
+/* T Logo watermark in center */
+.ticket-card__watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--color-gray-200);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-gray-200);
+  opacity: 0.5;
+}
+
+.ticket-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-xs);
+  position: relative;
+  z-index: 1;
+}
+
+.ticket-card__type {
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-900);
+}
+
+.ticket-card__subtype {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-md);
+}
+
+.ticket-card__status {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ticket-card__status--active {
+  color: var(--color-success);
+}
+
+.ticket-card__route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-lg) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ticket-card__station {
+  text-align: center;
+}
+
+.ticket-card__station--left {
+  text-align: left;
+}
+
+.ticket-card__station--right {
+  text-align: right;
+}
+
+.ticket-card__station-name {
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-900);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.ticket-card__station-zone {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.ticket-card__arrow {
+  color: var(--color-gray-400);
+  font-size: var(--font-size-xl);
+}
+
+.ticket-card__expires {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  position: relative;
+  z-index: 1;
+}
+
+.ticket-card__actions {
+  margin-top: var(--space-md);
+  position: relative;
+  z-index: 1;
+}
+
+/* Active ticket green header */
+.ticket-card--active {
+  border-top: 6px solid var(--color-success);
+}
+
+.ticket-card--active .ticket-card__status {
+  color: var(--color-success);
+}
+
+.ticket-card__timer {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.ticket-card__timer--warning {
+  background: var(--color-warning-light);
+  color: #856404;
+}
+
+/* ============================================
+   Buttons - MBTA Style
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Yellow primary button - MBTA style */
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-gray-900);
+  border-radius: var(--radius-lg);
+}
+
+.btn--secondary {
+  background: var(--color-gray-100);
+  color: var(--color-gray-900);
+}
+
+.btn--outline {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+/* Green activate button */
+.btn--activate {
+  background: var(--color-success);
+  color: var(--color-white);
+  width: 100%;
+  padding: var(--space-md);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-md);
+}
+
+.btn--large {
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-lg);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.btn--small {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+}
+
+/* Apple Pay / Google Pay */
+.btn--apple-pay {
+  background: #000000;
+  color: white;
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.btn--google-pay {
+  background: white;
+  border: 1px solid var(--color-gray-300);
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+/* ============================================
+   Alert Banner - Yellow MBTA style
+   ============================================ */
+.alert-banner {
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.alert-banner__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.alert-banner__content {
+  flex: 1;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  line-height: 1.4;
+}
+
+.alert-banner__title {
+  font-weight: 700;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.alert-banner__dismiss {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  color: var(--color-gray-700);
+}
+
+/* ============================================
+   Bottom Navigation
+   ============================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--mobile-width);
+  height: var(--bottom-nav-height);
+  background: var(--color-white);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid var(--color-gray-200);
+  padding-bottom: var(--safe-area-bottom);
+  z-index: 1000;
+}
+
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-gray-500);
+  background: none;
+  border: none;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav__item--active {
+  color: var(--color-primary);
+}
+
+.bottom-nav__icon {
+  width: 26px;
+  height: 26px;
+}
+
+.bottom-nav__badge {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  background: var(--color-error);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   Screen Layouts
+   ============================================ */
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen__content {
+  flex: 1;
+  padding: var(--space-md);
+  background: var(--color-primary);
+}
+
+.screen__content--white {
+  background: var(--color-white);
+}
+
+.screen__content--gray {
+  background: var(--color-gray-50);
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  color: var(--color-white);
+}
+
+.section-header__title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-header__action {
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+
+/* ============================================
+   Onboarding Screen
+   ============================================ */
+.onboarding {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-white);
+}
+
+.onboarding__logo {
+  width: 120px;
+  height: 120px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-2xl) auto var(--space-xl);
+  font-size: 60px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.onboarding__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+.onboarding__subtitle {
+  font-size: var(--font-size-lg);
+  opacity: 0.9;
+  margin-bottom: var(--space-xl);
+  line-height: 1.5;
+}
+
+.onboarding__notice {
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  text-align: left;
+}
+
+.onboarding__notice strong {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lg);
+}
+
+.onboarding__buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.onboarding__skip {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  opacity: 0.7;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  padding: var(--space-md);
+  font-family: var(--font-family);
+}
+
+/* ============================================
+   Route Selector
+   ============================================ */
+.route-selector {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+}
+
+.route-selector__field {
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.route-selector__field:last-child {
+  border-bottom: none;
+}
+
+.route-selector__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-xs);
+}
+
+.route-selector__value {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-gray-400);
+}
+
+.route-selector__value--selected {
+  color: var(--color-gray-900);
+}
+
+.route-selector__swap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  background: var(--color-gray-50);
+}
+
+.swap-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+
+.swap-btn:active {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   Station Selection
+   ============================================ */
+.station-select {
+  background: var(--color-white);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.station-select__search {
+  padding: var(--space-md);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.station-select__input {
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+}
+
+.station-select__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.station-list {
+  list-style: none;
+}
+
+.station-list__section {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-gray-100);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 65px;
+}
+
+.station-list__item {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-gray-100);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.station-list__item:active {
+  background: var(--color-gray-50);
+}
+
+.station-list__name {
+  font-weight: 500;
+  font-size: var(--font-size-base);
+}
+
+.station-list__zone {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.station-list__zone-help {
+  background: var(--color-gray-200);
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-600);
+}
+
+/* ============================================
+   Ticket Type Selection - MBTA Tabs Style
+   ============================================ */
+.ticket-tabs {
+  display: flex;
+  background: var(--color-gray-100);
+}
+
+.ticket-tabs__tab {
+  flex: 1;
+  padding: var(--space-md);
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  color: var(--color-gray-900);
+}
+
+.ticket-tabs__tab--active {
+  background: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.ticket-types {
+  list-style: none;
+}
+
+.ticket-type {
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-gray-100);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-type:active {
+  background: var(--color-gray-50);
+}
+
+.ticket-type__info {
+  flex: 1;
+}
+
+.ticket-type__name {
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  margin-bottom: 2px;
+}
+
+.ticket-type__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.ticket-type__price {
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.ticket-type__price::after {
+  content: '›';
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   Payment Screen
+   ============================================ */
+.payment-summary {
+  background: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.payment-summary__row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  font-size: var(--font-size-base);
+}
+
+.payment-summary__row--total {
+  border-top: 2px solid var(--color-gray-200);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+}
+
+.payment-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+}
+
+.payment-divider::before,
+.payment-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-gray-200);
+}
+
+.saved-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: var(--color-white);
+}
+
+.saved-card__icon {
+  width: 48px;
+  height: 32px;
+  background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+}
+
+.saved-card__info {
+  flex: 1;
+}
+
+.saved-card__number {
+  font-weight: 600;
+  font-size: var(--font-size-base);
+}
+
+.saved-card__expiry {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.saved-card__check {
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ============================================
+   Active Ticket Screen
+   ============================================ */
+.active-ticket {
+  background: var(--color-white);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.active-ticket__status {
+  background: var(--color-success);
+  color: white;
+  padding: var(--space-md);
+  text-align: center;
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  letter-spacing: 1px;
+}
+
+.active-ticket__qr {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  background: var(--color-white);
+}
+
+.active-ticket__qr-code {
+  padding: var(--space-md);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.active-ticket__info {
+  padding: var(--space-lg);
+  text-align: center;
+  background: var(--color-gray-50);
+}
+
+.active-ticket__route {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.active-ticket__type {
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-lg);
+}
+
+.active-ticket__timer {
+  background: var(--color-success);
+  color: white;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+}
+
+.active-ticket__timer--warning {
+  background: var(--color-warning);
+  color: var(--color-gray-900);
+}
+
+/* ============================================
+   Alerts Screen
+   ============================================ */
+.alerts-list {
+  padding: var(--space-md);
+}
+
+.alert-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  border-left: 4px solid var(--color-warning);
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-card--severe {
+  border-left-color: var(--color-error);
+}
+
+.alert-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.alert-card__line {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.alert-card__time {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+.alert-card__title {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-lg);
+}
+
+.alert-card__desc {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+  line-height: 1.5;
+}
+
+/* ============================================
+   Zone Map
+   ============================================ */
+.zone-map__visual {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.zone-map__diagram {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: var(--space-md);
+}
+
+.zone-ring {
+  position: absolute;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.zone-ring--1a {
+  width: 20%;
+  height: 20%;
+  top: 40%;
+  left: 40%;
+  opacity: 1;
+  background: var(--color-primary);
+}
+
+.zone-ring--2 {
+  width: 35%;
+  height: 35%;
+  top: 32.5%;
+  left: 32.5%;
+}
+
+.zone-ring--5 {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+}
+
+.zone-ring--8 {
+  width: 85%;
+  height: 85%;
+  top: 7.5%;
+  left: 7.5%;
+}
+
+.zone-map__label {
+  position: absolute;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.zone-map__legend {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.zone-map__legend-title {
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-lg);
+}
+
+.zone-map__legend-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+  font-size: var(--font-size-base);
+}
+
+.zone-map__legend-item:last-child {
+  border-bottom: none;
+}
+
+/* ============================================
+   Account Screen
+   ============================================ */
+.account-header {
+  background: var(--color-primary);
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  color: var(--color-white);
+}
+
+.account-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.account-name {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.account-email {
+  opacity: 0.8;
+  font-size: var(--font-size-base);
+}
+
+.account-menu {
+  background: var(--color-white);
+  list-style: none;
+}
+
+.account-menu__item {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-gray-100);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.account-menu__item:active {
+  background: var(--color-gray-50);
+}
+
+.account-menu__icon {
+  width: 32px;
+  font-size: var(--font-size-xl);
+}
+
+.account-menu__label {
+  flex: 1;
+  font-size: var(--font-size-base);
+}
+
+.account-menu__arrow {
+  color: var(--color-gray-400);
+  font-size: var(--font-size-xl);
+}
+
+/* ============================================
+   Confirmation Screen
+   ============================================ */
+.confirmation {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.confirmation__icon {
+  width: 100px;
+  height: 100px;
+  background: var(--color-success-light);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin-bottom: var(--space-lg);
+  color: var(--color-success);
+}
+
+.confirmation__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.confirmation__subtitle {
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-xl);
+  font-size: var(--font-size-lg);
+}
+
+.confirmation__card {
+  background: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  width: 100%;
+  margin-bottom: var(--space-xl);
+}
+
+.confirmation__buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ============================================
+   Modal
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  background: var(--color-white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: var(--mobile-width);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal__header {
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: var(--color-white);
+}
+
+.modal__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--color-gray-500);
+  padding: 0;
+  line-height: 1;
+}
+
+.modal__content {
+  padding: var(--space-lg);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fadeIn 0.3s ease; }
+.animate-slide-up { animation: slideUp 0.3s ease; }
+
+/* Loading */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-gray-200);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Quick Buy Cards
+   ============================================ */
+.quick-buy {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.quick-buy__card {
+  flex: 1;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+}
+
+.quick-buy__card:active {
+  transform: scale(0.98);
+}
+
+.quick-buy__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-xs);
+}
+
+.quick-buy__route {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.quick-buy__price {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-top: var(--space-xs);
+}
+
+/* ============================================
+   Favorite Cards
+   ============================================ */
+.favorite-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.favorite-card__star {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 0;
+}
+
+.favorite-card__route {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.favorite-card__swap {
+  background: var(--color-gray-100);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-600);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge--active {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.badge--inactive {
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+}

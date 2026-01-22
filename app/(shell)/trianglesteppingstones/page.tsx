@@ -240,6 +240,7 @@ export default function TriangleSteppingStonesPage() {
                   alt="Redesigned footer with credibility signals"
                   width={1920}
                   height={1080}
+                  loading="lazy"
                   className={styles.image}
                 />
               </div>
@@ -249,6 +250,7 @@ export default function TriangleSteppingStonesPage() {
                   alt="Volunteer form"
                   width={1920}
                   height={1080}
+                  loading="lazy"
                   className={styles.image}
                 />
               </div>

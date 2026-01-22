@@ -156,6 +156,7 @@ export default function SpotifyPage() {
                   alt="Spotify Mobile Home - Redesigned"
                   width={1200}
                   height={2400}
+                  loading="lazy"
                   className={styles.mobileImage}
                 />
                 <p className={styles.imageCaption}>Mobile Home - Redesigned</p>
@@ -171,6 +172,7 @@ export default function SpotifyPage() {
                   alt="Spotify Desktop Home - Before"
                   width={2400}
                   height={1600}
+                  loading="lazy"
                   className={styles.desktopImage}
                 />
               </div>
@@ -181,6 +183,7 @@ export default function SpotifyPage() {
                   alt="Spotify Desktop Home - After"
                   width={2400}
                   height={1600}
+                  loading="lazy"
                   className={styles.desktopImage}
                 />
               </div>
@@ -216,6 +219,7 @@ export default function SpotifyPage() {
                   alt="Desktop Breakdown - New Design"
                   width={2400}
                   height={1600}
+                  loading="lazy"
                   className={styles.desktopImage}
                 />
                 <p className={styles.imageCaption}>Desktop Breakdown - New Design</p>
@@ -226,6 +230,7 @@ export default function SpotifyPage() {
                   alt="Mobile Breakdown - New Design"
                   width={1200}
                   height={2400}
+                  loading="lazy"
                   className={styles.mobileImage}
                 />
                 <p className={styles.imageCaption}>Mobile Breakdown - New Design</p>
@@ -357,6 +362,7 @@ export default function SpotifyPage() {
                   alt="Simplified Navigation"
                   width={2400}
                   height={1600}
+                  loading="lazy"
                   className={styles.principleImage}
                 />
               </div>
@@ -367,6 +373,7 @@ export default function SpotifyPage() {
                   alt="Enhanced Search"
                   width={1200}
                   height={2400}
+                  loading="lazy"
                   className={styles.principleImage}
                 />
               </div>
@@ -377,6 +384,7 @@ export default function SpotifyPage() {
                   alt="Content Discovery"
                   width={1200}
                   height={2400}
+                  loading="lazy"
                   className={styles.principleImage}
                 />
               </div>
@@ -387,6 +395,7 @@ export default function SpotifyPage() {
                   alt="Playlist Management"
                   width={2400}
                   height={1600}
+                  loading="lazy"
                   className={styles.principleImage}
                 />
               </div>
@@ -397,6 +406,7 @@ export default function SpotifyPage() {
                   alt="Cross-Platform Consistency"
                   width={1200}
                   height={2400}
+                  loading="lazy"
                   className={styles.principleImage}
                 />
               </div>

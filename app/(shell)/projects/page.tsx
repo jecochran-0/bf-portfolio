@@ -4,14 +4,6 @@ import styles from "./page.module.css";
 
 const uxProjects = [
   {
-    title: "Spotify UX Audit",
-    subtitle: "Experience Strategy",
-    meta: "User Research · Journey Mapping · Prototyping",
-    imageSrc: "/Spotify_Project copy/Desktop-Home-Revamped.jpg",
-    imageAlt: "Spotify redesign dashboard mockups",
-    href: "/spotify",
-  },
-  {
     title: "GrammarlyGo Case Study",
     subtitle: "Product Design",
     meta: "Competitive Analysis · AI Workflows · UI Systems",
@@ -26,6 +18,14 @@ const uxProjects = [
     imageSrc: "/tss/tss-thumbnail.png",
     imageAlt: "Triangle Stepping Stones website redesign",
     href: "/trianglesteppingstones",
+  },
+  {
+    title: "MBTA mTicket Redesign",
+    subtitle: "UX Research",
+    meta: "Review Analysis · User Personas · Prototyping",
+    imageSrc: "/mbta/before/MBTA-homescreen.jpg",
+    imageAlt: "MBTA mTicket app redesign case study",
+    href: "/mbta",
   },
 ];
 
