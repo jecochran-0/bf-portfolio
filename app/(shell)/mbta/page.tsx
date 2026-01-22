@@ -163,7 +163,6 @@ export default function MBTAPage() {
                   width={800}
                   height={300}
                   loading="lazy"
-                  loading="lazy"
                   className={styles.reviewImage}
                 />
               </div>
