@@ -4,6 +4,14 @@ import styles from "./page.module.css";
 
 const uxProjects = [
   {
+    title: "Bridges to Science",
+    subtitle: "UX Case Study",
+    meta: "Nonprofit UX · Information Architecture · Conversion Design",
+    imageSrc: "/bridges-to-science/loading-screen-thumbnail.png",
+    imageAlt: "Bridges to Science redesign loading screen",
+    href: "/bridgestoscience",
+  },
+  {
     title: "GrammarlyGo Case Study",
     subtitle: "Product Design",
     meta: "Competitive Analysis · AI Workflows · UI Systems",
@@ -46,30 +54,6 @@ const devProjects = [
     imageAlt: "Generated bento box gallery layout",
     href: "https://jecochran-0.github.io/BentoBox/",
   },
-  {
-    title: "React Pizza Store",
-    subtitle: "Software Development",
-    meta: "React · State Machines · UI Components",
-    imageSrc: "/PizzaStore copy.png",
-    imageAlt: "Pizza store ordering interface",
-    href: "https://react-pizza-store-omega.vercel.app/",
-  },
-  {
-    title: "Pixel Character Generator",
-    subtitle: "Software Development",
-    meta: "Next.js · OpenAI · Image Synthesis",
-    imageSrc: "/PixelCharacterGenerator copy.png",
-    imageAlt: "Pixel character generator interface",
-    href: "https://pixel-character-generator.vercel.app/",
-  },
-  {
-    title: "Algorithm Visualizer",
-    subtitle: "Software Development",
-    meta: "React · D3 · Algorithm Education",
-    imageSrc: "/AlgorithmVisualizer_Preview copy.png",
-    imageAlt: "Algorithm visualizer dashboard",
-    href: "https://jecochran-0.github.io/algorithm_visualizer/",
-  },
 ];
 
 export default function ProjectsPage() {
@@ -87,7 +71,11 @@ export default function ProjectsPage() {
             <header className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>UX Design</h2>
             </header>
-            <ProjectRow projects={uxProjects} cardClassName={styles.projectCard} />
+            <ProjectRow
+              projects={uxProjects}
+              cardClassName={styles.projectCard}
+              layout="wrap"
+            />
           </section>
 
           <section className={styles.section}>
