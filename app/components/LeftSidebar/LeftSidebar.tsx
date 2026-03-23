@@ -15,8 +15,8 @@ type SocialLink = {
 };
 
 interface LeftSidebarProps {
-  badgeSrc: string;
-  badgeAlt: string;
+  badgeSrc?: string;
+  badgeAlt?: string;
   socials: SocialLink[];
 }
 
@@ -35,24 +35,26 @@ export function LeftSidebar({ badgeSrc, badgeAlt, socials }: LeftSidebarProps) {
   return (
     <aside className={styles.sidebar} aria-label="Profile shortcuts">
       <div className={styles.sidebarRail}>
-        <Link
-          href="https://www.designedby-jake.com/"
-          target="_blank"
-          rel="noreferrer"
-          className={styles.logoBadgeLink}
-          onClick={handleLogoClick}
-        >
-          <div className={styles.logoBadge}>
-            <Image
-              src={badgeSrc}
-              alt={badgeAlt}
-              fill
-              sizes="(max-width: 768px) 60px, 80px"
-              priority
-              className={styles.logoImage}
-            />
-          </div>
-        </Link>
+        {badgeSrc && (
+          <Link
+            href="https://www.designedby-jake.com/"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.logoBadgeLink}
+            onClick={handleLogoClick}
+          >
+            <div className={styles.logoBadge}>
+              <Image
+                src={badgeSrc}
+                alt={badgeAlt ?? "Profile logo"}
+                fill
+                sizes="(max-width: 768px) 60px, 80px"
+                priority
+                className={styles.logoImage}
+              />
+            </div>
+          </Link>
+        )}
         <div className={styles.iconColumn}>
           {socials.map((social) => (
             <Link

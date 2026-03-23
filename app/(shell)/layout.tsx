@@ -52,14 +52,6 @@ const SOCIAL_LINKS = [
     external: true,
   },
   {
-    href: "https://x.com/Jake_Snake0",
-    label: "X",
-    icon: (
-      <Image src="/assets/x-icon.png" alt="X icon" width={34} height={34} />
-    ),
-    external: true,
-  },
-  {
     href: "mailto:jake.e.cochran@gmail.com",
     label: "Email",
     icon: <EnvelopeIcon />,
@@ -259,11 +251,7 @@ export default function ShellLayout({ children }: ShellLayoutProps) {
   return (
     <div className={`${styles.wrapper} ${isInitialLoad ? styles.fadeIn : ""}`}>
       <div className={styles.sidebar}>
-        <LeftSidebar
-          badgeSrc="/assets/DBJ-Logo.png"
-          badgeAlt="Jake DBJ monogram"
-          socials={SOCIAL_LINKS}
-        />
+        <LeftSidebar socials={SOCIAL_LINKS} />
       </div>
       <div className={styles.main}>
         <div className={styles.backgroundLayer}>
