@@ -1,0 +1,233 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, 3.8vw, 44px);
+  width: 100%;
+  max-width: 1200px;
+  padding-top: clamp(18px, 3vw, 36px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.category {
+  margin: 0;
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.7rem, 2.8vw, 2.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  margin-top: clamp(14px, 1.8vw, 24px);
+}
+
+.metaCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(14px, 1.8vw, 20px);
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.metaCard:first-child {
+  gap: clamp(12px, 1.5vw, 16px);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.metaLabel {
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.metaValue {
+  font-size: clamp(0.88rem, 1.02vw, 1rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.liveSiteButton {
+  display: inline-block;
+  padding: clamp(8px, 1vw, 10px) clamp(14px, 1.8vw, 20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.liveSiteButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.4vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.subsectionTitle {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bodyText {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.07vw, 1.06rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+.problemCard {
+  background: rgba(0, 0, 0, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: clamp(16px, 2.2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.2vw, 14px);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: clamp(0.88rem, 1.02vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.cardText {
+  margin: 0;
+  font-size: clamp(0.88rem, 1vw, 0.98rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.sequenceList,
+.bulletList {
+  margin: 0;
+  padding-left: clamp(18px, 2.2vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sequenceList li,
+.bulletList li {
+  font-size: clamp(0.9rem, 1.02vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.imageCard {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: clamp(10px, 1.4vw, 14px);
+}
+
+.caseImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.quoteBlock {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.46);
+  border-left: 3px solid rgba(255, 255, 255, 0.42);
+  padding: clamp(16px, 2vw, 22px);
+  font-size: clamp(0.94rem, 1.06vw, 1.06rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quoteSource {
+  font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.noteText {
+  margin: 0;
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 900px) {
+  .metaGrid,
+  .problemGrid {
+    grid-template-columns: 1fr;
+  }
+}

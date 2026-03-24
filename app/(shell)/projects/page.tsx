@@ -4,8 +4,16 @@ import styles from "./page.module.css";
 
 const uxProjects = [
   {
+    title: "Henry's Fork Wildlife Alliance",
+    subtitle: "UX Design and Development",
+    meta: "Nonprofit UX · IA Restructure · Form Interaction Design",
+    imageSrc: "/henrys-fork/henrys-fork-thumbnail.png",
+    imageAlt: "Henry's Fork Wildlife Alliance website redesign",
+    href: "/henrysforkwildlifealliance",
+  },
+  {
     title: "Bridges to Science",
-    subtitle: "UX Case Study",
+    subtitle: "UX Design",
     meta: "Nonprofit UX · Information Architecture · Conversion Design",
     imageSrc: "/bridges-to-science/loading-screen-thumbnail.png",
     imageAlt: "Bridges to Science redesign loading screen",
@@ -13,7 +21,7 @@ const uxProjects = [
   },
   {
     title: "GrammarlyGo Case Study",
-    subtitle: "Product Design",
+    subtitle: "Case Study",
     meta: "Competitive Analysis · AI Workflows · UI Systems",
     imageSrc: "/assets/Grammarly-Go.webp",
     imageAlt: "GrammarlyGo case study screens",
@@ -29,7 +37,7 @@ const uxProjects = [
   },
   {
     title: "MBTA mTicket Redesign",
-    subtitle: "UX Research",
+    subtitle: "Case Study",
     meta: "Review Analysis · User Personas · Prototyping",
     imageSrc: "/mbta/before/MBTA-homescreen.jpg",
     imageAlt: "MBTA mTicket app redesign case study",
