@@ -180,7 +180,10 @@ export default function MyChartResultsPage() {
             </p>
           </div>
 
-          <div className={styles.compareGrid} aria-label="Test results list: desktop before and after">
+          <div
+            className={`${styles.compareGrid} ${styles.compareGridDesktop}`}
+            aria-label="Test results list: desktop before and after"
+          >
             <div className={styles.compareCell}>
               <p className={styles.compareLabel}>Before (desktop)</p>
               <figure className={`${styles.imageCard} ${styles.figure}`}>
@@ -294,7 +297,10 @@ export default function MyChartResultsPage() {
             </p>
           </div>
 
-          <div className={styles.compareGrid} aria-label="Single visit: desktop before and after">
+          <div
+            className={`${styles.compareGrid} ${styles.compareGridDesktop}`}
+            aria-label="Single visit: desktop before and after"
+          >
             <div className={styles.compareCell}>
               <p className={styles.compareLabel}>Before (desktop)</p>
               <figure className={`${styles.imageCard} ${styles.figure}`}>
@@ -365,7 +371,10 @@ export default function MyChartResultsPage() {
             </p>
           </div>
 
-          <div className={styles.compareGrid} aria-label="Lab metrics: desktop before and after">
+          <div
+            className={`${styles.compareGrid} ${styles.compareGridDesktop}`}
+            aria-label="Lab metrics: desktop before and after"
+          >
             <div className={styles.compareCell}>
               <p className={styles.compareLabel}>Before (desktop)</p>
               <figure className={`${styles.imageCard} ${styles.figure}`}>

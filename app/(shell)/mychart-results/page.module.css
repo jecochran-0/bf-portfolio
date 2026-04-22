@@ -229,6 +229,11 @@
   margin-top: clamp(8px, 1.2vw, 14px);
 }
 
+/* Desktop before/after: full width, stacked so mocks read larger */
+.compareGridDesktop {
+  grid-template-columns: 1fr;
+}
+
 /* Keep mobile frame exports near native width so they are not upscaled in a 50% row */
 .compareGridMobile {
   align-items: start;
@@ -330,6 +335,11 @@
 @media (max-width: 900px) {
   .compareGrid {
     grid-template-columns: 1fr;
+  }
+
+  /* Keep phone mocks side by side; desktop stacks are already 1 col */
+  .compareGrid.compareGridMobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .metaGrid {
