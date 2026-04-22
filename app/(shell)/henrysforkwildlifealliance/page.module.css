@@ -168,6 +168,11 @@
   color: rgba(255, 255, 255, 0.84);
 }
 
+/* Full-width figure inside a problem card (junk-drawer screenshot). */
+.problemCardFigure {
+  margin-top: clamp(10px, 1.2vw, 14px);
+}
+
 .sequenceList,
 .bulletList {
   margin: 0;
@@ -195,7 +200,19 @@
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.figure {
+  margin: 0;
+}
+
+.imageCaption {
+  margin: clamp(8px, 1vw, 12px) 0 0;
+  font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.76);
+  font-style: italic;
 }
 
 .quoteBlock {

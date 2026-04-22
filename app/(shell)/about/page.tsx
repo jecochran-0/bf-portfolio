@@ -127,7 +127,7 @@ const tabs: TabDefinition[] = [
       ],
       storyTitle: "My Story",
       storyParagraphs: [
-        "I’m a recent graduate of the University of Wisconsin–Madison with a perspective shaped by sketchbooks, custom PCs, and a curiosity for how things work.",
+        "I’m a recent graduate of the University of Wisconsin-Madison with a perspective shaped by sketchbooks, custom PCs, and a curiosity for how things work.",
         "That same curiosity drives me today. I want people to feel something when they use the products I help build to notice the craft and to enjoy every interaction. Sometimes it feels like everything on the internet is the same layout recycled over and over again, I want to create experiences that are truly unique.",
       ],
       hobbiesTitle: "When I’m not coding…",

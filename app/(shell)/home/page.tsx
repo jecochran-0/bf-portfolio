@@ -135,7 +135,7 @@ export default function HomeScreen() {
                   <>
                     <p className={styles.tileTitle}>UX Tip</p>
                     <p className={styles.tipQuote}>&quot;{UX_TIP}&quot;</p>
-                    <p className={styles.tipAuthor}>— {UX_TIP_AUTHOR}</p>
+                    <p className={styles.tipAuthor}>{UX_TIP_AUTHOR}</p>
                   </>
                 ) : (
                   <p className={styles.tileTitle}>UX Tip Unlock</p>

@@ -4,6 +4,14 @@ import styles from "./page.module.css";
 
 const uxProjects = [
   {
+    title: "MyChart — Test results UX",
+    subtitle: "Case study",
+    meta: "Secondary research · Information architecture · AI guardrails",
+    imageSrc: "/mychart-results/test-results-list-solution.png",
+    imageAlt: "Proposed MyChart test results with visit-level grouping",
+    href: "/mychart-results",
+  },
+  {
     title: "Henry's Fork Wildlife Alliance",
     subtitle: "UX Design and Development",
     meta: "Nonprofit UX · IA Restructure · Form Interaction Design",

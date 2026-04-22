@@ -199,7 +199,7 @@ export default function GrammarlyGoPage() {
                 <div className={styles.methodsRow}>
                   <div className={styles.methodsCell}>Product Analytics Review</div>
                   <div className={styles.methodsCell}>Quantitative</div>
-                  <div className={styles.methodsCell}>Understand user behavior at scale — identify drop-offs and usage patterns</div>
+                  <div className={styles.methodsCell}>Understand user behavior at scale to identify drop-offs and usage patterns</div>
                 </div>
                 <div className={styles.methodsRow}>
                   <div className={styles.methodsCell}>Unmoderated Usability Testing</div>
@@ -267,7 +267,7 @@ export default function GrammarlyGoPage() {
                 <div className={styles.findingType}>Quantitative</div>
               </div>
               <p className={styles.findingGoal}>
-                Understand user behavior at scale — identify drop-offs and usage patterns
+                Understand user behavior at scale to identify drop-offs and usage patterns
               </p>
               <div className={styles.findingKey}>
                 <strong>Key Finding:</strong> Only 12% of users returned within 7 days
@@ -277,7 +277,7 @@ export default function GrammarlyGoPage() {
               </div>
 
               <div className={styles.funnel}>
-                <h4 className={styles.funnelTitle}>Funnel: GrammarlyGO Usage – First 14 Days</h4>
+                <h4 className={styles.funnelTitle}>Funnel: GrammarlyGO usage, first 14 days</h4>
                 
                 <div className={styles.funnelStep}>
                   <div className={styles.funnelStepHeader}>
@@ -608,7 +608,7 @@ export default function GrammarlyGoPage() {
                 <li>Output that feels over-edited and impersonal</li>
               </ul>
               <p className={styles.playbackText}>
-                Even engaged users work around the friction manually — meaning the product isn&apos;t supporting them efficiently either.
+                Even engaged users work around the friction manually, which means the product isn&apos;t supporting them efficiently either.
               </p>
             </div>
           </section>

@@ -1,0 +1,343 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  font-family: "Futura", "Futura PT", "Century Gothic", "URW Gothic", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, 3.8vw, 44px);
+  width: 100%;
+  max-width: 1200px;
+  padding-top: clamp(18px, 3vw, 36px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.2vw, 16px);
+}
+
+.category {
+  margin: 0;
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.96);
+  font-weight: 600;
+}
+
+.kickerLine {
+  margin: 0;
+  font-size: clamp(0.82rem, 0.95vw, 0.9rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 52ch;
+}
+
+.disclaimer {
+  margin: 0;
+  font-size: clamp(0.72rem, 0.85vw, 0.8rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 56ch;
+}
+
+/* Matches Bridges / Triangle case-study header pattern */
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  margin-top: clamp(14px, 1.8vw, 20px);
+}
+
+.metaCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(14px, 1.8vw, 20px);
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.metaCard:first-child {
+  gap: clamp(12px, 1.5vw, 16px);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.metaLabel {
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.metaValue {
+  font-size: clamp(0.88rem, 1.02vw, 1rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.figmaButton {
+  display: inline-block;
+  padding: clamp(8px, 1vw, 10px) clamp(14px, 1.8vw, 20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.figmaButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.4vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.setTitle {
+  margin: 0 0 4px;
+  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 16px);
+  margin-top: clamp(4px, 0.6vw, 8px);
+}
+
+.solutionLabel {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+}
+
+.bodyText {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.07vw, 1.06rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.researchTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(0.86rem, 0.98vw, 0.95rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.researchTable th,
+.researchTable td {
+  padding: clamp(10px, 1.2vw, 14px) clamp(12px, 1.4vw, 16px);
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: top;
+}
+
+.researchTable th {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: clamp(0.7rem, 0.8vw, 0.78rem);
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.researchTable tr:last-child td {
+  border-bottom: none;
+}
+
+.numCell {
+  width: 2.2rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 600;
+}
+
+.principleList {
+  margin: 0;
+  padding-left: clamp(20px, 2.2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.principleList li {
+  font-size: clamp(0.9rem, 1.02vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.86);
+  padding-left: 4px;
+}
+
+.compareGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 14px);
+  margin-top: clamp(8px, 1.2vw, 14px);
+}
+
+/* Keep mobile frame exports near native width so they are not upscaled in a 50% row */
+.compareGridMobile {
+  align-items: start;
+}
+
+.compareGridMobile .imageCard {
+  max-width: min(100%, 400px);
+  margin-inline: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.compareCell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.compareLabel {
+  font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.62);
+  margin: 0;
+}
+
+.imageCard {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: clamp(8px, 1vw, 10px);
+}
+
+.caseImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.figure {
+  margin: 0;
+}
+
+.measureList {
+  margin: 0;
+  padding-left: clamp(18px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.measureList li {
+  font-size: clamp(0.9rem, 1.02vw, 0.98rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.pdfSection {
+  margin-top: clamp(4px, 0.8vw, 8px);
+  padding: clamp(20px, 2.4vw, 28px);
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.pdfCta {
+  display: inline-flex;
+  padding: clamp(10px, 1.2vw, 12px) clamp(18px, 2vw, 24px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pdfCta:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.pdfHint {
+  margin: 0;
+  font-size: clamp(0.78rem, 0.9vw, 0.86rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.64);
+  max-width: 48ch;
+}
+
+@media (max-width: 900px) {
+  .compareGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .metaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .researchTable {
+    display: block;
+    overflow-x: auto;
+  }
+}
