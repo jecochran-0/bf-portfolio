@@ -168,11 +168,6 @@
   color: rgba(255, 255, 255, 0.84);
 }
 
-/* Full-width figure inside a problem card (junk-drawer screenshot). */
-.problemCardFigure {
-  margin-top: clamp(10px, 1.2vw, 14px);
-}
-
 .sequenceList,
 .bulletList {
   margin: 0;

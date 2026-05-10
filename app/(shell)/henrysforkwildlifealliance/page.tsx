@@ -139,23 +139,6 @@ export default function HenrysForkWildlifeAlliancePage() {
                 emphasized, nothing is. The page had no focal point, no narrative,
                 and no clear next action.
               </p>
-              <figure
-                className={`${styles.imageCard} ${styles.figure} ${styles.problemCardFigure}`}
-              >
-                <Image
-                  src="/henrys-fork/homepage-before-below-fold.png"
-                  alt="Original HFWA homepage below the fold showing cluttered videos and sidebar"
-                  width={1600}
-                  height={1000}
-                  className={styles.caseImage}
-                />
-                <figcaption className={styles.imageCaption}>
-                  Below the fold: two video embeds side by side, a &quot;Get
-                  Involved&quot; sidebar stuffed with links, a bear ordinance
-                  callout with a photo, and more content below. This is what the
-                  team meant by &quot;dumping information onto the homepage.&quot;
-                </figcaption>
-              </figure>
             </article>
 
             <article className={styles.problemCard}>
